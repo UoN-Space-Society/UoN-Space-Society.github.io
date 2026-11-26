@@ -1,17 +1,3 @@
-const features = {
-  tranquility: ['01 / SEA OF TRANQUILITY', 'One giant leap.', 'Apollo 11 landed here in 1969. Every extraordinary journey begins with a first step.'],
-  tycho: ['02 / TYCHO CRATER', 'An impact worth making.', 'A young lunar crater with bright rays stretching across the surface. Curiosity leaves its mark.']
-};
-document.querySelectorAll('.moon-pin').forEach(button => {
-  button.setAttribute('aria-pressed', 'false');
-  button.addEventListener('click', () => {
-    const [index, title, description] = features[button.dataset.feature];
-    document.getElementById('moon-index').textContent = index;
-    document.getElementById('moon-title').textContent = title;
-    document.getElementById('moon-description').textContent = description;
-    document.querySelectorAll('.moon-pin').forEach(pin => pin.setAttribute('aria-pressed', String(pin === button)));
-  });
-});
 const menu = document.querySelector('.menu');
 const mobileNav = document.getElementById('mobile-nav');
 function closeMenu() { menu.setAttribute('aria-expanded', 'false'); mobileNav.hidden = true; menu.textContent = 'Menu +'; }
