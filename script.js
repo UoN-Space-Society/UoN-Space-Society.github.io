@@ -21,6 +21,3 @@ menu.addEventListener('click', () => {
 });
 mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !mobileNav.hidden) { closeMenu(); menu.focus(); } });
-document.querySelectorAll('.project').forEach(project => project.addEventListener('toggle', () => {
-  if (project.open) document.querySelectorAll('.project').forEach(other => { if (other !== project) other.open = false; });
-}));
