@@ -1,0 +1,40 @@
+---
+import type { ImageMetadata } from 'astro';
+import OptimizedImage from './OptimizedImage.astro';
+
+interface Props {
+  image: string;
+  alt: string;
+}
+const { image, alt } = Astro.props;
+const rasters = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/sponsors/*.png',
+  { eager: true },
+);
+const vectors = import.meta.glob<{ default: string }>(
+  '../assets/sponsors/*.svg',
+  { eager: true, query: '?url' },
+);
+const key = `../assets/sponsors/${image}`;
+const raster = rasters[key]?.default;
+const vector = vectors[key]?.default;
+if (!raster && !vector) throw new Error(`Unknown sponsor logo: ${image}`);
+---
+
+{raster ? (
+  <OptimizedImage
+    src={raster}
+    alt={alt}
+    widths={[240, 480, 640]}
+    sizes="(max-width: 560px) 70vw, 25vw"
+  />
+) : (
+  <img
+    src={vector}
+    alt={alt}
+    width="640"
+    height="320"
+    loading="lazy"
+    decoding="async"
+  />
+)}

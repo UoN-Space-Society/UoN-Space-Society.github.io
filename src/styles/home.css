@@ -1,0 +1,246 @@
+.home-page #main {
+  isolation: isolate;
+}
+.landing-hero {
+  position: sticky;
+  top: 0;
+  z-index: -1;
+  height: 100svh;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #142131;
+  color: #fff;
+}
+.landing-photo,
+.landing-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.landing-photo {
+  object-fit: cover;
+  object-position: 50% 62%;
+  opacity: var(--hero-opacity, 1);
+}
+.landing-shade {
+  background: linear-gradient(
+    180deg,
+    #071b3b55 0%,
+    #0c254d75 48%,
+    #081a3255 100%
+  );
+}
+.landing-copy {
+  position: relative;
+  text-align: center;
+  padding: 150px 24px 100px;
+  opacity: var(--hero-copy-opacity, 1);
+}
+.landing-copy > .mono {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  margin: 0 0 26px;
+}
+.landing-copy h1 {
+  font-size: clamp(44px, 6.3vw, 104px);
+  font-weight: 700;
+  letter-spacing: 0.065em;
+  line-height: 1.13;
+  text-wrap: balance;
+}
+.landing-tagline {
+  font-size: clamp(17px, 2vw, 30px);
+  line-height: 1.5;
+  margin: 22px 0 0;
+}
+.landing-down {
+  position: absolute;
+  bottom: 28px;
+  left: calc(50% - 28px);
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  opacity: var(--hero-copy-opacity, 1);
+}
+.landing-down span {
+  width: 25px;
+  height: 25px;
+  border-right: 4px solid currentColor;
+  border-bottom: 4px solid currentColor;
+  transform: translateY(-6px) rotate(45deg);
+}
+.home-page #main > .section {
+  position: relative;
+  background: var(--paper);
+}
+.home-page #main > .projects {
+  background: #e3e4d9;
+  border-top: 1px solid var(--line);
+}
+.home-page .featured-projects {
+  margin-bottom: 24px;
+}
+.about {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 5%;
+}
+.about .section-label {
+  padding-top: 10px;
+}
+.about-body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9%;
+  margin-top: 38px;
+}
+.about-body > p {
+  font-size: 23px;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+.about-body > div p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 16px;
+  color: #53594d;
+}
+.videos {
+  border-top: 1px solid var(--line);
+}
+.video-feature {
+  margin: 0;
+}
+.video-frame {
+  aspect-ratio: 16/9;
+  background: #191c18;
+}
+.video-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-feature figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+}
+.video-feature figcaption .mono {
+  font-size: 8px;
+  color: var(--muted);
+}
+.video-feature h3 {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  margin: 8px 0;
+}
+.video-feature figcaption p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  max-width: 520px;
+}
+@media (max-width: 900px) {
+  .about-body {
+    gap: 6%;
+  }
+  .about-body > p {
+    font-size: 20px;
+  }
+}
+@media (max-width: 650px) {
+  .landing-hero {
+    min-height: 540px;
+  }
+  .landing-photo {
+    object-position: 50% 65%;
+  }
+  .landing-copy {
+    padding: 130px 18px 100px;
+  }
+  .landing-copy h1 {
+    font-size: clamp(33px, 7.6vw, 50px);
+    letter-spacing: 0.035em;
+  }
+  .landing-copy > .mono {
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    margin-bottom: 22px;
+  }
+  .landing-tagline {
+    max-width: 290px;
+    margin: 22px auto 0;
+  }
+  .landing-down {
+    bottom: 20px;
+  }
+  .about {
+    display: block;
+  }
+  .about-body {
+    display: block;
+    margin-top: 28px;
+  }
+  .about-body > p {
+    font-size: 22px;
+    margin-bottom: 25px;
+    max-width: 330px;
+  }
+  .video-feature figcaption {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .video-feature h3 {
+    font-size: 25px;
+  }
+  .video-feature figcaption p {
+    font-size: 12px;
+  }
+}
+
+/* Compact homepage link to the dedicated contact page. */
+.home-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-top: 1px solid var(--line);
+}
+.home-contact h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: -0.04em;
+}
+.home-contact p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 16px 0 0;
+  max-width: 480px;
+}
+.home-contact .button {
+  flex-shrink: 0;
+  min-width: 180px;
+}
+@media (max-width: 650px) {
+  .home-contact {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .home-contact .button {
+    align-self: flex-start;
+  }
+}

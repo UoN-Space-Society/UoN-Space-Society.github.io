@@ -1,0 +1,17 @@
+{
+  "title": "Project CRES — Little John",
+  "category": "RACE 2 SPACE / 2026",
+  "description": "A regeneratively and film-cooled bipropellant liquid engine designed for 5 kN of thrust. Little John hotfired at Race 2 Space 2026.",
+  "image": "../../assets/projects/cres-hotfire.jpg",
+  "imageAlt": "Little John rocket engine during a hotfire test",
+  "badge": false,
+  "group": "recent",
+  "order": 1,
+  "url": "https://uoncres.org/",
+  "linkLabel": "Visit Project CRES",
+  "featured": {
+    "title": "Little John",
+    "category": "PROJECT CRES / ROCKET PROPULSION",
+    "tagline": "From design to ignition."
+  }
+}

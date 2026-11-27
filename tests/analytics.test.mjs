@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 
 const source = readFileSync(
-  new URL('../analytics.js', import.meta.url),
+  new URL('../public/analytics.js', import.meta.url),
   'utf8',
 );
 const now = Date.now();
@@ -178,7 +178,10 @@ test('clicks redact email addresses and destination query strings', () => {
 test('connected configuration uses the measurement ID from the society web stream', () => {
   const window = {};
   vm.runInNewContext(
-    readFileSync(new URL('../analytics-config.js', import.meta.url), 'utf8'),
+    readFileSync(
+      new URL('../public/analytics-config.js', import.meta.url),
+      'utf8',
+    ),
     { window },
   );
   assert.equal(window.SPACE_ANALYTICS_ID, 'G-5678YGQX46');

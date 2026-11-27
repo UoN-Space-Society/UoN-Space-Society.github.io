@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projectGroups } from '../data/project-groups';
+import '../styles/projects.css';
+
+const projects = await getCollection('projects');
+---
+
+<SiteLayout
+  title="Our projects — Nottingham Space Society"
+  description="Explore Nottingham Space Society’s rocket engines, stratospheric biology, rovers, satellites and earlier projects."
+>
+  <main
+    id="main"
+    tabindex="-1"
+    class="projects-page"
+  >
+    <div class="projects-heading">
+      <h1>Our projects</h1>
+      <p>
+        Rocket engines, living cells and machines built to explore. Discover the
+        work of Nottingham Space Society.
+      </p>
+    </div>
+    {projectGroups.map((group, index) => (
+      <section
+        class:list={{ 'project-group': index > 0 }}
+        aria-labelledby={`${group.id}-title`}
+      >
+        <div class="project-group-heading">
+          <h2 id={`${group.id}-title`}>{group.title}</h2>
+          <p class="mono">{group.subtitle}</p>
+        </div>
+        <ul
+          class:list={[
+            'project-gallery',
+            { 'project-gallery-compact': group.id === 'archive' },
+          ]}
+        >
+          {projects
+            .filter(({ data }) => data.group === group.id)
+            .sort((a, b) => a.data.order - b.data.order)
+            .map((project) => (
+              <li>
+                <ProjectCard project={project} />
+              </li>
+            ))}
+        </ul>
+      </section>
+    ))}
+  </main>
+</SiteLayout>

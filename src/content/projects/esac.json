@@ -1,0 +1,12 @@
+{
+  "title": "ESAC submission",
+  "category": "STUDENT AEROSPACE CHALLENGE BADGE",
+  "description": "A requirements study for a high-speed, long-range suborbital transportation vehicle.",
+  "image": "../../assets/projects/esac.jpg",
+  "imageAlt": "Student Aerospace Challenge competition mark",
+  "badge": true,
+  "group": "upcoming",
+  "order": 6,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

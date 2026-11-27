@@ -1,0 +1,12 @@
+{
+  "title": "Project CRES — Preburner",
+  "category": "PICTURED: LITTLE JOHN, PREVIOUS CRES ENGINE",
+  "description": "The first year of a five-year pump-fed engine programme, developing an oxygen and isopropyl-alcohol preburner with a target 15 kN hotfire.",
+  "image": "../../assets/projects/cres-engine.jpg",
+  "imageAlt": "Little John, the previous CRES rocket engine",
+  "badge": false,
+  "group": "upcoming",
+  "order": 0,
+  "url": "https://uoncres.org/",
+  "linkLabel": "Visit Project CRES"
+}

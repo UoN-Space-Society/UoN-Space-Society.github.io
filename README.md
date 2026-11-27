@@ -1,14 +1,98 @@
 # Nottingham Space Society
 
-A responsive, buildless website for the University of Nottingham Space Society.
+A static Astro website for the University of Nottingham Space Society. All 19
+public pages are generated at build time, with the existing `.html` URLs.
+There is no application server or React runtime in production.
 
-Run `npm run dev` and open http://127.0.0.1:4173. Run `npm run build` to produce `dist/`. The root is also ready for GitHub Pages.
+## Development
+
+Use Node.js 22.23.4 or newer.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the URL Astro prints (normally http://127.0.0.1:4173). If the port is busy,
+Astro chooses another. Astro may run development in the background; use
+`npx astro dev status`, `npx astro dev logs`, and `npx astro dev stop` to manage it.
+
+```sh
+npm run check          # Astro and TypeScript diagnostics
+npm run format         # Format source, including Astro components
+npm run format:check   # Check formatting without editing
+npm run build          # Generate production files in dist/
+npm run preview        # Preview the production build
+```
+
+## Source structure
+
+- `src/pages/`: homepage, contact, sponsors, project directory and one project
+  detail route. `build.format: "file"` preserves the existing `.html` URLs.
+- `src/layouts/SiteLayout.astro`: shared metadata, local fonts, header and footer.
+- `src/components/`: navigation, project cards, optimised images and video player.
+- `src/content/projects/`: one JSON file per project. Astro validates the schema
+  in `src/content.config.ts`; the filename determines the public project slug.
+- `src/data/`: navigation links, project group labels and sponsor details.
+- `src/styles/`: formatted shared and page-specific CSS. Import page styles only
+  where they are used; edit shared card styles in `cards.css`.
+- `src/scripts/`: small TypeScript enhancements for navigation and hero scrolling.
+- `src/assets/`: original photographs and logos. Astro generates responsive WebP
+  raster images; unreferenced originals are not published as public assets.
+- `public/`: files published unchanged, including the favicon and font licences.
+- `tests/`: production-output checks and Playwright browser acceptance tests.
+
+To add a project, copy a JSON file in `src/content/projects/`, choose a unique
+filename, add the original image under `src/assets/projects/`, and update its
+content. Use `group` (`recent`, `upcoming`, or `archive`) and `order` for its
+position in the directory. The card and detail page share that content. Optional
+`featured` fields supply homepage card copy; the homepage selects featured IDs.
+Run the checks and build before committing. Adding/removing a public project also
+requires updating the intentional route inventory in the acceptance tests.
+
+## Testing
+
+Install Chromium once after installing npm dependencies:
+
+```sh
+npx playwright install chromium
+npm test
+```
+
+`npm test` builds production files, runs Analytics unit tests, validates metadata, local links, anchors and
+published assets, then tests desktop and mobile Chromium against those exact
+files. The isolated test server uses port 4381 and never reuses another server.
+For an already built site, run `npm run test:build` or `npm run test:browser`.
+
+Browser coverage includes direct public URLs, project navigation, mobile and
+tablet navigation, Escape and focus restoration, navigation without JavaScript,
+reduced motion, skip links, covered hero links, automated WCAG AA checks,
+responsive hero image budgets and deferred video loading. YouTube playback is
+stubbed in its test: it verifies when and how the embed is requested, without
+relying on YouTube's network or player implementation. Browser tests do not
+replace human accessibility and visual review.
+
+For a new feature or bug fix, first add a behaviour test and demonstrate the
+failure, implement the change, then refactor while keeping the suite green.
+See `docs/migration-validation.md` for the migration's red/green evidence and
+asset-size comparisons. Failure traces are saved in ignored `test-results/`.
 
 ## Hosting
 
-The GitHub Pages workflow checks and builds the website, then publishes `dist/` whenever a change is pushed or merged into `main`. It can also be run manually from GitHub Actions. Set Settings → Pages → Source to **GitHub Actions**. The site address is https://uon-space-society.github.io/.
+GitHub Actions validates pull requests and changes pushed to `main`. It installs
+locked dependencies, checks formatting and types, builds, and runs output and
+browser tests. Only passing pushes to `main` or manual workflow runs from `main` deploy
+`dist/` to GitHub Pages. Pull requests never deploy.
 
-Local environment files, hosting configuration and `.private/` notes are ignored by Git. Project image provenance is kept locally in `.private/project-asset-sources.json`; source manifests named `sources.json` are excluded from the published assets. Ignoring a file does not remove copies from earlier commits.
+Set Settings → Pages → Source to **GitHub Actions**. The site address is
+https://uon-space-society.github.io/. Change `site` in `astro.config.mjs` if the
+canonical domain changes. This configuration targets the domain root.
+
+Local environment files, hosting configuration and `.private/` notes are ignored
+by Git. Ignoring a file does not remove copies from earlier commits. Project
+image provenance is retained locally in `.private/project-asset-sources.json`;
+tracked sponsor provenance is in `docs/asset-sources/sponsors.json`, outside the
+published asset tree. Never put private source notes in `public/`.
 
 ## Design
 
@@ -20,7 +104,7 @@ The rest of the site uses an editorial field-notes identity: warm paper, forest 
 
 Society activities and community links are based on https://su.nottingham.ac.uk/activities/view/spacesoc and https://linktr.ee/spacesoc. HELIA information: https://projecthelia.org/. Events link to the community rather than presenting unverified dates. Project illustrations are original conceptual SVG/CSS drawings, not photographs of society hardware.
 
-Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in assets/moon.jpg. DM Sans and Space Mono load from Google Fonts, with local system fallbacks. The static build uses Node.js built-ins. Optional Google Analytics uses cookies only after visitor consent.
+Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in src/assets/moon.jpg. DM Sans and Space Mono are self-hosted WOFF2 fonts with system fallbacks. Their OFL licences ship in `public/licenses/`. Astro generates static HTML and optimises raster images at build time. The video player connects to YouTube only after a visitor presses Play. Google Analytics loads only after visitor consent, as described below.
 
 Before public launch, the committee should review copy, contact links and current project availability, and can replace conceptual illustrations with its own project photographs.
 
@@ -28,12 +112,12 @@ Header social icons: Instagram, YouTube and LinkedIn SVG paths extracted from th
 
 ## Code formatting
 
-Run `npm ci` once to install the formatter. Use `npm run format` to format HTML, CSS, JavaScript, JSON, SVG and workflow files, and `npm run format:check` to check formatting. The shared settings use two-space indentation, an 80-column target and one HTML attribute per line. Generated output and local files are excluded.
-
+Run `npm ci` once to install the formatter. Use `npm run format` to format Astro, HTML, CSS, TypeScript, JavaScript, JSON, SVG and workflow files, and `npm run format:check` to check formatting. The shared settings use two-space indentation, an 80-column target and one HTML attribute per line. Generated output and local files are excluded.
 
 ## Google Analytics 4
 
-Tracking is installed on every page, including project pages, using the society's
+The shared `Analytics.astro` component is included once by `SiteLayout.astro`
+on every page, including project pages, using the society's
 web-stream measurement ID `G-5678YGQX46`. The numeric property ID is `566066828`
 and stream ID is `16428511066`. These identifiers are public, not API credentials.
 The configuration works from the source folder and in the GitHub Pages build.
@@ -44,7 +128,7 @@ to disable the integration.
    create a GA4 property and a **Web** data stream for
    `https://uon-space-society.github.io/`.
 2. Copy the stream's measurement ID into `window.SPACE_ANALYTICS_ID` in
-   `analytics-config.js`. This ID is public; no API key is required for collection.
+   `public/analytics-config.js`. This ID is public; no API key is required for collection.
 3. In the stream's Enhanced measurement settings, enable scroll measurement if
    wanted. Disable outbound-click, site-search, form-interaction, video-engagement
    and file-download measurement: our custom clicks use sanitized destinations.
@@ -110,7 +194,6 @@ If a key is exposed, revoke it rather than merely deleting the local file.
 References: [Google tag consent setup](https://developers.google.com/tag-platform/security/guides/consent)
 and [Analytics API setup](https://developers.google.com/analytics/devguides/reporting/data/v1/quickstart).
 
-
 ### Tests and the red/green/refactor cycle
 
 Run `npm test`. Tests use Node's built-in test runner with a small simulated
@@ -136,7 +219,6 @@ the key belonged to a different account from the initially authorized reader.
 Viewer access for the matching account without the `-01` suffix was then granted;
 the live report request succeeded with the expected headers and no traffic rows.
 
-
 ### Cloud authorization issue resolved
 
 The organization enforced `iam.disableServiceAccountKeyCreation`, and the signed-in
@@ -151,3 +233,20 @@ Merging this feature into `dev` does not publish it: the Pages workflow deploys
 from `main`. After promotion to `main`, verify page views and `site_link_click`
 events in GA4 Realtime with consent accepted. Custom click dimensions still need
 registration in GA4 if parameter breakdowns in Explore are wanted.
+
+### Integration with the Astro migration
+
+Analytics is composed into the shared Astro layout rather than duplicated across
+legacy HTML pages. `src/components/Analytics.astro` imports the consent styling
+and loads the two ordered, deferred scripts from `public/`. The static build
+copies them to the site root, so nested `.html` project URLs work too. No client
+router is configured; each navigation loads a fresh page and restores consent.
+
+A production-build test first failed because the Astro routes had no Analytics
+scripts. Integrating the component made it pass for all 19 generated pages.
+Desktop and mobile browser tests then verified no tag before acceptance, one tag
+per consented page load, consent restoration on a nested project page, and no tag
+after rejection and reload. Requests to Google are stubbed in these tests.
+
+The Astro workflow runs Analytics unit tests alongside its output and browser
+checks before deployment; the redundant earlier checks workflow was removed.

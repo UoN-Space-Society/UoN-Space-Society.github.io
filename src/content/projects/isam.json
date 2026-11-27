@@ -1,0 +1,12 @@
+{
+  "title": "ISAM submission",
+  "category": "ISAM COMPETITION BADGE",
+  "description": "A mission and business proposal for in-orbit servicing, assembly and manufacturing.",
+  "image": "../../assets/projects/isam.png",
+  "imageAlt": "ISAM competition badge",
+  "badge": true,
+  "group": "upcoming",
+  "order": 5,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}
