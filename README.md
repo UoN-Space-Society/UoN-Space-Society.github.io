@@ -25,3 +25,7 @@ Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, htt
 Before public launch, the committee should review copy, contact links and current project availability, and can replace conceptual illustrations with its own project photographs.
 
 Header social icons: Instagram, YouTube and LinkedIn SVG paths extracted from the Font Awesome font served by https://purdueseds.space/wp-content/themes/salient/css/fonts/fontawesome-webfont.svg. Discord uses Font Awesome 6 Free Brands (https://github.com/FortAwesome/Font-Awesome). Font Awesome icons are licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Icons are embedded locally; social links open in a new tab.
+
+## Code formatting
+
+Run `npm ci` once to install the formatter. Use `npm run format` to format HTML, CSS, JavaScript, JSON, SVG and workflow files, and `npm run format:check` to check formatting. The shared settings use two-space indentation, an 80-column target and one HTML attribute per line. Generated output and local files are excluded.

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+.astro/
+test-results/
+.openai/
+.private/
+.vercel/
+.env
+.env.*
+package-lock.json
