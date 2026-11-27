@@ -30,7 +30,7 @@ npm run preview        # Preview the production build
 - `src/pages/`: homepage, contact, sponsors, project directory and one project
   detail route. `build.format: "file"` preserves the existing `.html` URLs.
 - `src/layouts/SiteLayout.astro`: shared metadata, local fonts, header and footer.
-- `src/components/`: navigation, project cards, optimised images and video player.
+- `src/components/`: navigation, project cards and optimised images.
 - `src/content/projects/`: one JSON file per project. Astro validates the schema
   in `src/content.config.ts`; the filename determines the public project slug.
 - `src/data/`: navigation links, project group labels and sponsor details.
@@ -67,10 +67,8 @@ For an already built site, run `npm run test:build` or `npm run test:browser`.
 Browser coverage includes direct public URLs, project navigation, mobile and
 tablet navigation, Escape and focus restoration, navigation without JavaScript,
 reduced motion, skip links, covered hero links, automated WCAG AA checks,
-responsive hero image budgets and deferred video loading. YouTube playback is
-stubbed in its test: it verifies when and how the embed is requested, without
-relying on YouTube's network or player implementation. Browser tests do not
-replace human accessibility and visual review.
+responsive hero image budgets. Browser tests do not replace human accessibility
+and visual review.
 
 For a new feature or bug fix, first add a behaviour test and demonstrate the
 failure, implement the change, then refactor while keeping the suite green.
@@ -104,7 +102,7 @@ The rest of the site uses an editorial field-notes identity: warm paper, forest 
 
 Society activities and community links are based on https://su.nottingham.ac.uk/activities/view/spacesoc and https://linktr.ee/spacesoc. HELIA information: https://projecthelia.org/. Events link to the community rather than presenting unverified dates. Project illustrations are original conceptual SVG/CSS drawings, not photographs of society hardware.
 
-Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in src/assets/moon.jpg. DM Sans and Space Mono are self-hosted WOFF2 fonts with system fallbacks. Their OFL licences ship in `public/licenses/`. Astro generates static HTML and optimises raster images at build time. The video player connects to YouTube only after a visitor presses Play. Google Analytics loads only after visitor consent, as described below.
+Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in src/assets/moon.jpg. DM Sans and Space Mono are self-hosted WOFF2 fonts with system fallbacks. Their OFL licences ship in `public/licenses/`. Astro generates static HTML and optimises raster images at build time. Google Analytics loads only after visitor consent, as described below.
 
 Before public launch, the committee should review copy, contact links and current project availability, and can replace conceptual illustrations with its own project photographs.
 

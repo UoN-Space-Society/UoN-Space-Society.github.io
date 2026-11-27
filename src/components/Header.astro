@@ -2,6 +2,7 @@
 import NavigationLinks from './NavigationLinks.astro';
 import OptimizedImage from './OptimizedImage.astro';
 import logo from '../assets/nottingham-space-society.png';
+import unionLogo from '../assets/uonsu-monochrome.png';
 import { socialLinks } from '../data/navigation';
 import '../styles/navigation.css';
 
@@ -57,6 +58,19 @@ const { home = false } = Astro.props;
         </svg>
       </a>
     ))}
+    <a
+      href="https://su.nottingham.ac.uk/activities/view/spacesoc"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Students’ Union membership (opens in a new tab)"
+      title="Students’ Union membership"
+    >
+      <span
+        class="union-logo"
+        style={{ '--union-logo': `url("${unionLogo.src}")` }}
+        aria-hidden="true"
+      ></span>
+    </a>
   </div>
   <details class="mobile-menu">
     <summary
