@@ -23,8 +23,8 @@ const pages = await Promise.all(
     .map(async (file) => ({ file, $: load(await readFile(file, 'utf8')) })),
 );
 
-test('all 19 public pages have useful metadata and unique page titles', () => {
-  assert.equal(pages.length, 19);
+test('all 20 public pages have useful metadata and unique page titles', () => {
+  assert.equal(pages.length, 20);
   const titles = new Set();
   for (const { file, $ } of pages) {
     assert.equal($('html').attr('lang'), 'en', file);
@@ -116,4 +116,24 @@ test('all Astro routes share one ordered Analytics integration', () => {
       file,
     );
   }
+});
+
+test('division pages retain every project and introduce all three teams', async () => {
+  const $ = load(await readFile(resolve(root, 'projects.html'), 'utf8'));
+  const about = load(await readFile(resolve(root, 'about.html'), 'utf8'));
+  const sourceFiles = await readdir('src/content/projects');
+  const actualLinks = $('main .project-photo-card')
+    .map((_, element) => $(element).attr('href'))
+    .get();
+  const expectedLinks = sourceFiles
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => `/projects/${file.replace('.json', '.html')}`);
+  assert.deepEqual(actualLinks.sort(), expectedLinks.sort());
+  for (const division of ['rocketry', 'spacecraft', 'research']) {
+    assert.equal($(`#${division} h2`).length, 1);
+    assert.ok($(`#${division} .project-photo-card`).length > 0);
+    assert.equal(about(`#about-${division}`).length, 1);
+    assert.equal(about(`a[href="/projects.html#${division}"]`).length, 1);
+  }
+  assert.equal(about('.about-team img').length, 3);
 });

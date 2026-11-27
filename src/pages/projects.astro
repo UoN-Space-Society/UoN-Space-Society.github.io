@@ -2,10 +2,17 @@
 import { getCollection } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { projectGroups } from '../data/project-groups';
+import { projectDivisions } from '../data/project-divisions';
 import '../styles/projects.css';
 
 const projects = await getCollection('projects');
+const currentProjects = projects.filter(({ data }) => data.group !== 'archive');
+const archiveProjects = projects
+  .filter(({ data }) => data.group === 'archive')
+  .sort((a, b) => a.data.order - b.data.order);
+if (currentProjects.some(({ data }) => !data.division)) {
+  throw new Error('Every current project must belong to a division.');
+}
 ---
 
 <SiteLayout
@@ -24,23 +31,29 @@ const projects = await getCollection('projects');
         work of Nottingham Space Society.
       </p>
     </div>
-    {projectGroups.map((group, index) => (
+    <nav
+      class="division-navigation"
+      aria-label="Project divisions"
+    >
+      {projectDivisions.map((division) => (
+        <a href={`#${division.id}`}>
+          {division.title} <span aria-hidden="true">↓</span>
+        </a>
+      ))}
+    </nav>
+    {projectDivisions.map((division) => (
       <section
-        class:list={{ 'project-group': index > 0 }}
-        aria-labelledby={`${group.id}-title`}
+        class="project-division"
+        id={division.id}
+        aria-labelledby={`${division.id}-title`}
       >
-        <div class="project-group-heading">
-          <h2 id={`${group.id}-title`}>{group.title}</h2>
-          <p class="mono">{group.subtitle}</p>
+        <div class="division-heading">
+          <h2 id={`${division.id}-title`}>{division.title}</h2>
+          <p>{division.description}</p>
         </div>
-        <ul
-          class:list={[
-            'project-gallery',
-            { 'project-gallery-compact': group.id === 'archive' },
-          ]}
-        >
-          {projects
-            .filter(({ data }) => data.group === group.id)
+        <ul class="division-gallery">
+          {currentProjects
+            .filter(({ data }) => data.division === division.id)
             .sort((a, b) => a.data.order - b.data.order)
             .map((project) => (
               <li>
@@ -50,5 +63,21 @@ const projects = await getCollection('projects');
         </ul>
       </section>
     ))}
+    <section
+      class="project-division"
+      aria-labelledby="archive-title"
+    >
+      <div class="division-heading">
+        <h2 id="archive-title">Earlier projects</h2>
+        <p>Explore previous projects from across the society.</p>
+      </div>
+      <ul class="division-gallery">
+        {archiveProjects.map((project) => (
+          <li>
+            <ProjectCard project={project} />
+          </li>
+        ))}
+      </ul>
+    </section>
   </main>
 </SiteLayout>

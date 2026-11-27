@@ -8,5 +8,6 @@
   "group": "upcoming",
   "order": 3,
   "url": "https://linktr.ee/spacesoc",
-  "linkLabel": "Find the project team"
+  "linkLabel": "Find the project team",
+  "division": "spacecraft"
 }

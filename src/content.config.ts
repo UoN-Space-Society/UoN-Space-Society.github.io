@@ -13,6 +13,7 @@ const projects = defineCollection({
       imageAlt: z.string().min(1),
       badge: z.boolean().default(false),
       group: z.enum(['recent', 'upcoming', 'archive']),
+      division: z.enum(['rocketry', 'spacecraft', 'research']).optional(),
       order: z.number().int().nonnegative(),
       url: z.url(),
       linkLabel: z.string().min(1),

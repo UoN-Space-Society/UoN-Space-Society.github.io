@@ -35,6 +35,7 @@ test('video connects to YouTube only after a visitor chooses to play', async ({
 const routes = [
   '/',
   '/index.html',
+  '/about.html',
   '/projects.html',
   '/sponsors.html',
   '/contact.html',
