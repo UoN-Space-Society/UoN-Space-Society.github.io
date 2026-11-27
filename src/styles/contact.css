@@ -36,11 +36,11 @@
   display: inline-block;
   font-size: clamp(24px, 3.2vw, 44px);
   letter-spacing: -0.04em;
-  border-bottom: 1px solid var(--green);
+  border-bottom: 1px solid var(--accent);
   overflow-wrap: anywhere;
 }
 .contact-address:hover {
-  color: var(--green);
+  color: var(--accent);
 }
 @media (max-width: 650px) {
   .contact-page {
