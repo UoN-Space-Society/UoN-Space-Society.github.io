@@ -29,3 +29,7 @@ coverage/
 # Astro generated types and temporary legacy assets
 .astro/
 .astro-public/
+
+# Browser test artifacts
+test-results/
+playwright-report/
