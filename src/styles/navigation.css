@@ -51,6 +51,14 @@
   height: 23px;
   fill: currentColor;
 }
+.social-links .union-logo {
+  display: block;
+  width: 26px;
+  height: 26px;
+  background-color: currentColor;
+  -webkit-mask: var(--union-logo) center / contain no-repeat;
+  mask: var(--union-logo) center / contain no-repeat;
+}
 .mobile-menu {
   display: none;
 }
