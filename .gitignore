@@ -25,3 +25,7 @@ coverage/
 .vscode/
 *.swp
 *.swo
+
+# Astro generated types and temporary legacy assets
+.astro/
+.astro-public/

@@ -1,8 +1,12 @@
 # Nottingham Space Society
 
-A responsive, buildless website for the University of Nottingham Space Society.
+A responsive, static Astro website for the University of Nottingham Space Society.
 
-Run `npm run dev` and open http://127.0.0.1:4173. Run `npm run build` to produce `dist/`. The root is also ready for GitHub Pages.
+Use Node.js 22.23.4 or newer and run `npm ci` to install dependencies.
+
+Run `npm run dev` and open http://127.0.0.1:4173. Run `npm run check` for JavaScript syntax and Astro diagnostics, `npm run build` to produce `dist/`, and `npm run preview` to preview that production build.
+
+Astro is being introduced incrementally. `src/pages/index.astro` renders the existing root `index.html` without changing its markup. The other HTML files, CSS, browser JavaScript, and assets remain in their existing locations for now. `build.mjs` prepares them in the generated `.astro-public/` directory before development or builds; do not edit that directory. This preserves existing `.html` URLs while leaving reusable layouts and content migration for the next stage. Astro produces the final `dist/` output.
 
 ## Hosting
 
@@ -20,7 +24,7 @@ The rest of the site uses an editorial field-notes identity: warm paper, forest 
 
 Society activities and community links are based on https://su.nottingham.ac.uk/activities/view/spacesoc and https://linktr.ee/spacesoc. HELIA information: https://projecthelia.org/. Events link to the community rather than presenting unverified dates. Project illustrations are original conceptual SVG/CSS drawings, not photographs of society hardware.
 
-Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in assets/moon.jpg. DM Sans and Space Mono load from Google Fonts, with local system fallbacks. No build dependencies, cookies or analytics.
+Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in assets/moon.jpg. DM Sans and Space Mono load from Google Fonts, with local system fallbacks. Astro supplies the build tooling. No cookies or analytics.
 
 Before public launch, the committee should review copy, contact links and current project availability, and can replace conceptual illustrations with its own project photographs.
 
