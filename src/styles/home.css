@@ -82,9 +82,6 @@
   background: #e3e4d9;
   border-top: 1px solid var(--line);
 }
-.home-page .featured-projects {
-  margin-bottom: 24px;
-}
 .home-sponsor-logos {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -178,5 +175,86 @@
 @media (max-width: 650px) {
   .home-contact {
     gap: 24px;
+  }
+}
+
+/* A compact mosaic of project photography and concept images. */
+.home-page .projects > h2 {
+  max-width: 1120px;
+  margin: 0 auto 32px;
+}
+.project-collage {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 210px);
+  gap: 12px;
+  max-width: 1120px;
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+}
+.project-collage li {
+  min-width: 0;
+  overflow: hidden;
+}
+.project-collage li:first-child {
+  grid-row: span 2;
+}
+.project-collage li:nth-child(2) {
+  grid-column: span 2;
+}
+.project-collage a {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1c2926;
+}
+.project-collage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 240ms ease;
+}
+.project-collage span {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 32px 14px 14px;
+  color: #fff;
+  background: linear-gradient(transparent, #000b);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.project-collage a:hover img,
+.project-collage a:focus-visible img {
+  transform: scale(1.04);
+}
+@media (max-width: 900px) {
+  .project-collage {
+    grid-template-rows: repeat(2, 170px);
+  }
+}
+@media (max-width: 650px) {
+  .project-collage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, 140px);
+    gap: 10px;
+  }
+  .project-collage li:first-child {
+    grid-row: auto;
+  }
+  .project-collage li:nth-child(2) {
+    grid-column: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-collage img {
+    transition: none;
+  }
+  .project-collage a:hover img,
+  .project-collage a:focus-visible img {
+    transform: none;
   }
 }
