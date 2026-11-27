@@ -2,8 +2,9 @@
 import NavigationLinks from './NavigationLinks.astro';
 import OptimizedImage from './OptimizedImage.astro';
 import logo from '../assets/nottingham-space-society.png';
+import secondaryLogo from '../assets/nottingham-space-society-badge.png';
 import unionLogo from '../assets/uonsu-monochrome.png';
-import { socialLinks } from '../data/navigation';
+import { membershipLink, socialLinks } from '../data/navigation';
 import '../styles/navigation.css';
 
 interface Props {
@@ -19,7 +20,7 @@ const { home = false } = Astro.props;
     aria-label="SpaceSoc home"
   >
     <OptimizedImage
-      src={logo}
+      src={home ? logo : secondaryLogo}
       alt="Nottingham Space Society"
       widths={[180, 360]}
       sizes="(max-width: 360px) 90px, (max-width: 650px) 92px, 116px"
@@ -59,11 +60,11 @@ const { home = false } = Astro.props;
       </a>
     ))}
     <a
-      href="https://su.nottingham.ac.uk/activities/view/spacesoc"
+      href={membershipLink.href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Students’ Union membership (opens in a new tab)"
-      title="Students’ Union membership"
+      aria-label={`${membershipLink.label} (opens in a new tab)`}
+      title={membershipLink.label}
     >
       <span
         class="union-logo"

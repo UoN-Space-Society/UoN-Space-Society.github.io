@@ -5,6 +5,11 @@ export const navigationLinks = [
   { label: 'Contact Us', href: '/contact.html' },
 ] as const;
 
+export const membershipLink = {
+  label: 'Students’ Union membership',
+  href: 'https://su.nottingham.ac.uk/activities/view/spacesoc',
+} as const;
+
 export const socialLinks = [
   {
     label: 'Instagram',
