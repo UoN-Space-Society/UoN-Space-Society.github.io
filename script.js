@@ -1,32 +1,17 @@
 const menu = document.querySelector('.menu');
 const mobileNav = document.getElementById('mobile-nav');
-const menuMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const menuBreakpoint = window.matchMedia('(max-width: 800px)');
-let menuAnimation;
+// Keep the panel mounted so CSS can animate both opening and closing.
+mobileNav.hidden = false;
+mobileNav.inert = true;
+mobileNav.setAttribute('aria-hidden', 'true');
 function setMenuOpen(open) {
-  const wasHidden = mobileNav.hidden;
-  const current = getComputedStyle(mobileNav);
-  const from = wasHidden
-    ? { clipPath: 'inset(0 0 100% 0)', transform: 'translateY(-12px)', opacity: 0 }
-    : { clipPath: current.clipPath, transform: current.transform, opacity: current.opacity };
-  if (menuAnimation) menuAnimation.cancel();
   menu.setAttribute('aria-expanded', String(open));
   menu.textContent = open ? 'Close −' : 'Menu +';
   mobileNav.inert = !open;
-  if (menuMotion.matches || !menuBreakpoint.matches) {
-    mobileNav.hidden = !open;
-    return;
-  }
-  mobileNav.hidden = false;
-  menuAnimation = mobileNav.animate([from, open
-    ? { clipPath: 'inset(0 0 0% 0)', transform: 'translateY(0)', opacity: 1 }
-    : { clipPath: 'inset(0 0 100% 0)', transform: 'translateY(-12px)', opacity: 0 }
-  ], { duration: 280, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
-  menuAnimation.onfinish = () => {
-    mobileNav.hidden = !open;
-    menuAnimation.cancel();
-    menuAnimation = undefined;
-  };
+  mobileNav.setAttribute('aria-hidden', String(!open));
+  mobileNav.classList.toggle('is-open', open);
+  mobileNav.style.height = open ? `${mobileNav.scrollHeight}px` : '0px';
 }
 function closeMenu() { setMenuOpen(false); }
 menu.addEventListener('click', () => setMenuOpen(menu.getAttribute('aria-expanded') !== 'true'));
@@ -34,9 +19,10 @@ mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', c
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { closeMenu(); menu.focus(); }
 });
-menuBreakpoint.addEventListener('change', () => { if (!menuBreakpoint.matches) closeMenu(); });
-menuMotion.addEventListener('change', () => setMenuOpen(menu.getAttribute('aria-expanded') === 'true'));
-mobileNav.inert = mobileNav.hidden;
+window.addEventListener('resize', () => {
+  if (!menuBreakpoint.matches) closeMenu();
+  else if (menu.getAttribute('aria-expanded') === 'true') mobileNav.style.height = `${mobileNav.scrollHeight}px`;
+});
 
 // The following section covers the sticky hero as its photo fades out.
 const landingHero = document.querySelector('.landing-hero');
