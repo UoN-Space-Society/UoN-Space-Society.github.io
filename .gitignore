@@ -13,6 +13,9 @@ coverage/
 *.key
 *.p12
 *.pfx
+# Analytics service-account JSON keys (keep ordinary project JSON tracked)
+lucid-forklift-*.json
+reader.json
 
 # Local hosting, agent configuration, and private source notes
 .openai/

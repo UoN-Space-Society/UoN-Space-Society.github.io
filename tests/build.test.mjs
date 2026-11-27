@@ -94,3 +94,26 @@ test('published files exclude private metadata and unneeded source files', () =>
     assert.ok(!/sources\.json$|\.env|\.map$|\.ts$|\.astro$/.test(file), file);
   }
 });
+
+test('all Astro routes share one ordered Analytics integration', () => {
+  for (const { file, $ } of pages) {
+    const scripts = $('script[src]')
+      .toArray()
+      .map((node) => $(node).attr('src'));
+    assert.equal(
+      scripts.filter((src) => src === '/analytics-config.js').length,
+      1,
+      file,
+    );
+    assert.equal(
+      scripts.filter((src) => src === '/analytics.js').length,
+      1,
+      file,
+    );
+    assert.ok(
+      scripts.indexOf('/analytics-config.js') <
+        scripts.indexOf('/analytics.js'),
+      file,
+    );
+  }
+});
