@@ -1,0 +1,14 @@
+{
+  "ansys.svg": "https://upload.wikimedia.org/wikipedia/commons/1/14/Ansys_logo_%282019%29.svg",
+  "hamamatsu.svg": "https://www.hamamatsu.com/content/dam/hamamatsu-photonics/system/images/logo.svg",
+  "onshape.svg": "https://www.onshape.com/cdn-images/a78f7568040f105efeb382b77cf06a696223233f-216x49.svg",
+  "nottingham.svg": "https://www.nottingham.ac.uk/etc.clientlibs/uon/clientlibs/clientlib-v2/resources/images/UoN-Logo-Dark.svg (transparent background and dark foreground adapted for pale page)",
+  "cpi-official.png": "https://static.wixstatic.com/media/b15e27_27b70db21d8441ad83d351a1246aab28~mv2.png",
+  "imeche-official.png": "https://www.imeche.org/IME/ui/img/header/logo/imeche-logo.png",
+  "rexus-bexus-transparent.png": "https://rexusbexus.net/wp-content/uploads/2023/06/RexBexLogoCap.png",
+  "rs-transparent.png": "https://imperialrocketry.com/sponsors/RS.png (outer white backdrop removed with imagegen)",
+  "accu-transparent.png": "User-supplied artwork; background removed and foreground changed to navy with imagegen",
+  "rocket-propulsion-transparent.png": "User-supplied artwork; background removed and enlarged with imagegen",
+  "cascade-transparent.png": "User-supplied screenshot; background removed and enlarged with imagegen; subtitle darkened for contrast",
+  "biodiscovery-transparent.png": "User-supplied screenshot; background removed and enlarged with imagegen"
+}
