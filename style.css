@@ -93,3 +93,19 @@ a.sponsor-card:hover h2{color:var(--green);text-decoration:underline;text-underl
 .landing-header .social-links a:hover{color:var(--lime)}
 @media(min-width:651px) and (max-width:1100px){header nav,.landing-header nav{gap:14px;font-size:11px}header,.home-page .landing-header{gap:14px}.social-links{gap:2px}.social-links a{width:30px}}
 @media(max-width:650px){header,.home-page .landing-header{gap:8px}.social-links{gap:0;margin-left:auto}.social-links a{width:29px}.social-links svg{width:18px;height:20px}.landing-header .brand img{width:110px}.home-page .landing-header .menu{padding:10px}.brand img{width:110px}}
+
+/* Contact */
+.contact-page{padding:72px 4.5% 96px;max-width:1600px;margin:0 auto}
+.contact-heading{padding-bottom:48px;border-bottom:1px solid var(--line)}
+.contact-heading>.mono{color:var(--muted);margin:0 0 24px}
+.contact-heading h1{font-size:clamp(64px,8vw,112px);line-height:1.05}
+.contact-heading>p:last-child{max-width:520px;font-size:18px;line-height:1.7;margin:24px 0 0}
+.contact-layout{padding-top:48px}
+.contact-layout h2{font-size:36px;margin:20px 0 24px}
+.contact-layout p:not(.mono){font-size:16px;line-height:1.8;max-width:540px}
+.contact-address{display:inline-block;font-size:clamp(24px,3.2vw,44px);letter-spacing:-.04em;border-bottom:1px solid var(--green);overflow-wrap:anywhere}
+.contact-address:hover{color:var(--green)}
+header nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:5px}
+@media(min-width:651px) and (max-width:1100px){header nav{gap:12px;font-size:11px}header{gap:16px}.join-small{padding:12px}.join-small span{margin-left:8px}.brand img{width:140px}}
+@media(max-width:800px){header nav,.join-small{display:none}.menu{display:block;border:1px solid var(--line);background:transparent;padding:10px 14px;font-size:11px}#mobile-nav:not([hidden]){display:flex;flex-direction:column;padding:20px 5%;gap:20px;border-bottom:1px solid var(--line);font-size:15px}}
+@media(max-width:650px){.contact-page{padding:40px 5% 64px}.contact-heading{padding-bottom:32px}.contact-heading>p:last-child{font-size:16px}.contact-layout{padding-top:32px}.contact-layout h2{font-size:30px}}
