@@ -31,6 +31,7 @@ npm run preview        # Preview the production build
   detail route. `build.format: "file"` preserves the existing `.html` URLs.
 - `src/layouts/SiteLayout.astro`: shared metadata, local fonts, header and footer.
 - `src/components/`: navigation, project cards and optimised images.
+
 - `src/content/projects/`: one JSON file per project. Astro validates the schema
   in `src/content.config.ts`; the filename determines the public project slug.
 - `src/data/`: navigation links, project group labels and sponsor details.
@@ -41,6 +42,18 @@ npm run preview        # Preview the production build
   raster images; unreferenced originals are not published as public assets.
 - `public/`: files published unchanged, including the favicon and font licences.
 - `tests/`: production-output checks and Playwright browser acceptance tests.
+
+## Shared navigation
+
+The navigation has one source of truth: edit page links, social destinations and
+the Students’ Union membership link in `src/data/navigation.ts`.
+`Header.astro` renders the shared header, `NavigationLinks.astro` renders both
+desktop and mobile menus, and `SiteLayout.astro` includes that header on every
+page, including project details. Rebuilding updates all pages together; no
+separate navigation HTML page or client-side fetch is needed. GitHub Pages can
+cache old HTML for ten minutes. After a deployment, hard-refresh a stale tab
+(Cmd+Shift+R on macOS, Ctrl+Shift+R on Windows/Linux) before comparing headers.
+The build tests check navigation consistency on every generated page.
 
 To add a project, copy a JSON file in `src/content/projects/`, choose a unique
 filename, add the original image under `src/assets/projects/`, and update its

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import { load } from 'cheerio';
+import { navigationLinks, membershipLink } from '../src/data/navigation.ts';
 
 const root = resolve('dist');
 async function filesIn(directory) {
@@ -136,4 +137,24 @@ test('division pages retain every project and introduce all three teams', async 
     assert.equal(about(`a[href="/projects.html#${division}"]`).length, 1);
   }
   assert.equal(about('.about-team img').length, 3);
+});
+
+test('every page shares the current desktop/mobile menu and SU membership icon', () => {
+  for (const { file, $ } of pages) {
+    assert.equal($('header.site-header').length, 1, file);
+    for (const selector of ['header .desktop-nav a', 'header #mobile-nav a']) {
+      const actual = $(selector)
+        .map((_, link) => ({
+          label: $(link).text().trim(),
+          href: $(link).attr('href'),
+        }))
+        .get();
+      assert.deepEqual(actual, navigationLinks, `${file}: ${selector}`);
+    }
+    const membership = $(`header a[href="${membershipLink.href}"]`);
+    assert.equal(membership.length, 1, `${file}: missing membership link`);
+    assert.match(membership.attr('aria-label'), /Students’ Union membership/);
+    assert.equal(membership.find('.union-logo').length, 1, file);
+    assert.match(membership.find('.union-logo').attr('style'), /url\(/, file);
+  }
 });
