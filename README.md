@@ -23,3 +23,5 @@ Society activities and community links are based on https://su.nottingham.ac.uk/
 Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in assets/moon.jpg. DM Sans and Space Mono load from Google Fonts, with local system fallbacks. No build dependencies, cookies or analytics.
 
 Before public launch, the committee should review copy, contact links and current project availability, and can replace conceptual illustrations with its own project photographs.
+
+Header social icons: Instagram, YouTube and LinkedIn SVG paths extracted from the Font Awesome font served by https://purdueseds.space/wp-content/themes/salient/css/fonts/fontawesome-webfont.svg. Discord uses Font Awesome 6 Free Brands (https://github.com/FortAwesome/Font-Awesome). Font Awesome icons are licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Icons are embedded locally; social links open in a new tab.

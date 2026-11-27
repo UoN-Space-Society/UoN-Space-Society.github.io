@@ -85,3 +85,12 @@ a.sponsor-card:hover h2{color:var(--green);text-decoration:underline;text-underl
 .home-page .project-image img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
 @media(max-width:1000px){.landing-header nav{gap:16px;font-size:12px}.home-page .landing-header{padding:0 4.5%}.landing-header .join-small{font-size:11px;padding:12px}}
 @media(max-width:650px){.home-page .landing-header{height:104px;padding:0 5%}.landing-header .brand img{width:138px;height:92px}.landing-header .menu{border-color:#ffffff80;color:#fff}.home-page #mobile-nav{position:absolute;top:104px;left:0;right:0;z-index:6;background:var(--paper)}.landing-hero{min-height:540px}.landing-photo{object-position:50% 65%}.landing-copy{padding:130px 18px 100px}.landing-copy h1{font-size:clamp(33px,7.6vw,50px);letter-spacing:.035em}.landing-copy>.mono{font-size:8px;letter-spacing:.12em;margin-bottom:22px}.landing-tagline{max-width:290px;margin:22px auto 0}.landing-down{bottom:20px}}
+
+/* Locally embedded Font Awesome brand icons; see README for attribution. */
+.social-links{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.social-links a{display:grid;place-items:center;width:36px;height:44px;transition:color .2s}
+.social-links svg{display:block;width:21px;height:23px;fill:currentColor}
+.social-links a:hover{color:#6c7c3b}
+.landing-header .social-links a:hover{color:var(--lime)}
+@media(min-width:651px) and (max-width:1100px){header nav,.landing-header nav{gap:14px;font-size:11px}header,.home-page .landing-header{gap:14px}.social-links{gap:2px}.social-links a{width:30px}}
+@media(max-width:650px){header,.home-page .landing-header{gap:8px}.social-links{gap:0;margin-left:auto}.social-links a{width:29px}.social-links svg{width:18px;height:20px}.landing-header .brand img{width:110px}.home-page .landing-header .menu{padding:10px}.brand img{width:110px}}
