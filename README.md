@@ -79,9 +79,9 @@ asset-size comparisons. Failure traces are saved in ignored `test-results/`.
 
 ## Hosting
 
-GitHub Actions validates pull requests and changes pushed to `dev`. It installs
+GitHub Actions validates pull requests and changes pushed to `main`. It installs
 locked dependencies, checks formatting and types, builds, and runs output and
-browser tests. Only passing pushes to `dev` or manual workflow runs deploy
+browser tests. Only passing pushes to `main` or manual workflow runs from `main` deploy
 `dist/` to GitHub Pages. Pull requests never deploy.
 
 Set Settings → Pages → Source to **GitHub Actions**. The site address is
