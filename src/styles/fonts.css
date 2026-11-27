@@ -1,17 +1,17 @@
 /* WOFF2 subsets are bundled locally; rendering never waits on Google Fonts. */
 @font-face {
-  font-family: "DM Sans Variable";
+  font-family: 'DM Sans Variable';
   font-style: normal;
   font-display: swap;
   font-weight: 100 1000;
-  src: url("@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2")
-    format("woff2");
+  src: url('@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2')
+    format('woff2');
 }
 @font-face {
-  font-family: "Space Mono";
+  font-family: 'Space Mono';
   font-style: normal;
   font-display: swap;
   font-weight: 400;
-  src: url("@fontsource/space-mono/files/space-mono-latin-400-normal.woff2")
-    format("woff2");
+  src: url('@fontsource/space-mono/files/space-mono-latin-400-normal.woff2')
+    format('woff2');
 }

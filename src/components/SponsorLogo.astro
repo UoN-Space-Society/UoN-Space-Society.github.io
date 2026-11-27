@@ -1,6 +1,6 @@
 ---
-import type { ImageMetadata } from "astro";
-import OptimizedImage from "./OptimizedImage.astro";
+import type { ImageMetadata } from 'astro';
+import OptimizedImage from './OptimizedImage.astro';
 
 interface Props {
   image: string;
@@ -8,12 +8,12 @@ interface Props {
 }
 const { image, alt } = Astro.props;
 const rasters = import.meta.glob<{ default: ImageMetadata }>(
-  "../assets/sponsors/*.png",
+  '../assets/sponsors/*.png',
   { eager: true },
 );
 const vectors = import.meta.glob<{ default: string }>(
-  "../assets/sponsors/*.svg",
-  { eager: true, query: "?url" },
+  '../assets/sponsors/*.svg',
+  { eager: true, query: '?url' },
 );
 const key = `../assets/sponsors/${image}`;
 const raster = rasters[key]?.default;

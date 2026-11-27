@@ -1,9 +1,9 @@
 /** Cache hero geometry and update only during the visible part of its fade. */
 export function initializeHero() {
-  const hero = document.querySelector<HTMLElement>(".landing-hero");
+  const hero = document.querySelector<HTMLElement>('.landing-hero');
   if (!hero) return;
 
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let frame = 0;
   let height = hero.offsetHeight;
 
@@ -14,11 +14,11 @@ export function initializeHero() {
       Math.max(0, window.scrollY / Math.max(1, height)),
     );
     hero.style.setProperty(
-      "--hero-opacity",
+      '--hero-opacity',
       String(reducedMotion.matches ? 1 : 1 - progress),
     );
     hero.style.setProperty(
-      "--hero-copy-opacity",
+      '--hero-copy-opacity',
       String(reducedMotion.matches ? 1 : Math.max(0, 1 - progress * 1.8)),
     );
     hero.inert = progress >= 1;
@@ -29,7 +29,7 @@ export function initializeHero() {
 
   // Once covered, avoid further frame callbacks until scrolling back to it.
   window.addEventListener(
-    "scroll",
+    'scroll',
     () => {
       if (window.scrollY < height || !hero.inert) schedule();
     },
@@ -41,6 +41,6 @@ export function initializeHero() {
     height = hero.offsetHeight;
     schedule();
   }).observe(hero);
-  reducedMotion.addEventListener("change", schedule);
+  reducedMotion.addEventListener('change', schedule);
   update();
 }

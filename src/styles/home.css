@@ -152,50 +152,6 @@
   margin: 0;
   max-width: 520px;
 }
-.video-feature .text-link {
-  flex-shrink: 0;
-  min-width: 180px;
-}
-.join {
-  position: relative;
-}
-.join > p {
-  font-size: 8px;
-  margin-bottom: 25px;
-}
-.join h2 {
-  font-size: clamp(80px, 12vw, 185px);
-  line-height: 0.9;
-}
-.join h2 em {
-  color: var(--green);
-}
-.asterisk {
-  display: inline-block;
-  color: var(--green);
-  font-size: 0.8em;
-  position: absolute;
-  right: 10%;
-  top: 24%;
-}
-.join-bottom {
-  margin: 40px 0 35px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-}
-.join-bottom > p {
-  font-size: 15px;
-  line-height: 1.7;
-}
-.join-links {
-  border-top: 1px solid var(--line);
-  padding-top: 20px;
-  display: flex;
-  gap: 35px;
-  font-size: 11px;
-}
 @media (max-width: 900px) {
   .about-body {
     gap: 6%;
@@ -250,36 +206,41 @@
   .video-feature h3 {
     font-size: 25px;
   }
-  .video-feature .text-link {
-    max-width: none;
-  }
   .video-feature figcaption p {
     font-size: 12px;
   }
-  .join h2 {
-    font-size: 88px;
+}
+
+/* Compact homepage link to the dedicated contact page. */
+.home-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-top: 1px solid var(--line);
+}
+.home-contact h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: -0.04em;
+}
+.home-contact p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 16px 0 0;
+  max-width: 480px;
+}
+.home-contact .button {
+  flex-shrink: 0;
+  min-width: 180px;
+}
+@media (max-width: 650px) {
+  .home-contact {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
   }
-  .join > p {
-    max-width: 200px;
-    font-size: 7px;
-  }
-  .asterisk {
-    top: 32%;
-    right: 7%;
-    font-size: 0.6em;
-  }
-  .join-bottom {
-    display: block;
-    margin-top: 30px;
-  }
-  .join-bottom .button {
-    margin-top: 15px;
-    width: 100%;
-    font-size: 11px;
-  }
-  .join-links {
-    gap: 20px;
-    flex-wrap: wrap;
-    font-size: 10px;
+  .home-contact .button {
+    align-self: flex-start;
   }
 }

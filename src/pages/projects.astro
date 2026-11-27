@@ -1,18 +1,22 @@
 ---
-import { getCollection } from "astro:content";
-import SiteLayout from "../layouts/SiteLayout.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import { projectGroups } from "../data/project-groups";
-import "../styles/projects.css";
+import { getCollection } from 'astro:content';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projectGroups } from '../data/project-groups';
+import '../styles/projects.css';
 
-const projects = await getCollection("projects");
+const projects = await getCollection('projects');
 ---
 
 <SiteLayout
   title="Our projects — Nottingham Space Society"
   description="Explore Nottingham Space Society’s rocket engines, stratospheric biology, rovers, satellites and earlier projects."
 >
-  <main id="main" tabindex="-1" class="projects-page">
+  <main
+    id="main"
+    tabindex="-1"
+    class="projects-page"
+  >
     <div class="projects-heading">
       <h1>Our projects</h1>
       <p>
@@ -22,7 +26,7 @@ const projects = await getCollection("projects");
     </div>
     {projectGroups.map((group, index) => (
       <section
-        class:list={{ "project-group": index > 0 }}
+        class:list={{ 'project-group': index > 0 }}
         aria-labelledby={`${group.id}-title`}
       >
         <div class="project-group-heading">
@@ -31,8 +35,8 @@ const projects = await getCollection("projects");
         </div>
         <ul
           class:list={[
-            "project-gallery",
-            { "project-gallery-compact": group.id === "archive" },
+            'project-gallery',
+            { 'project-gallery-compact': group.id === 'archive' },
           ]}
         >
           {projects

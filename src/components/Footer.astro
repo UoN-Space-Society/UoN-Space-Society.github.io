@@ -1,6 +1,11 @@
 ---
-import OptimizedImage from "./OptimizedImage.astro";
-import logo from "../assets/nottingham-space-society.png";
+import OptimizedImage from './OptimizedImage.astro';
+import logo from '../assets/nottingham-space-society.png';
+
+interface Props {
+  home?: boolean;
+}
+const { home = false } = Astro.props;
 ---
 
 <footer class="site-footer">
@@ -31,7 +36,13 @@ import logo from "../assets/nottingham-space-society.png";
       FIND OUR COMMUNITY ↗
     </a>
   </div>
-  <a href="#top" class="top-link" aria-label="Back to top">
-    ↑
-  </a>
+  {!home && (
+    <a
+      href="#top"
+      class="top-link"
+      aria-label="Back to top"
+    >
+      ↑
+    </a>
+  )}
 </footer>

@@ -1,9 +1,9 @@
-import { defineCollection } from "astro:content";
-import { z } from "zod";
-import { glob } from "astro/loaders";
+import { defineCollection } from 'astro:content';
+import { z } from 'zod';
+import { glob } from 'astro/loaders';
 
 const projects = defineCollection({
-  loader: glob({ pattern: "*.json", base: "./src/content/projects" }),
+  loader: glob({ pattern: '*.json', base: './src/content/projects' }),
   schema: ({ image }) =>
     z.object({
       title: z.string().min(1),
@@ -12,7 +12,7 @@ const projects = defineCollection({
       image: image(),
       imageAlt: z.string().min(1),
       badge: z.boolean().default(false),
-      group: z.enum(["recent", "upcoming", "archive"]),
+      group: z.enum(['recent', 'upcoming', 'archive']),
       order: z.number().int().nonnegative(),
       url: z.url(),
       linkLabel: z.string().min(1),

@@ -1,4 +1,7 @@
-<div class="video-frame" data-video-player>
+<div
+  class="video-frame"
+  data-video-player
+>
   <a
     class="video-play"
     href="https://www.youtube.com/watch?v=oqgHnKCRmLE"
@@ -7,7 +10,11 @@
   >
     Watch hybrid rocket engine video on YouTube ↗
   </a>
-  <button class="video-play" type="button" hidden>
+  <button
+    class="video-play"
+    type="button"
+    hidden
+  >
     <span aria-hidden="true">▶</span>
     Play hybrid rocket engine video
   </button>
@@ -15,24 +22,24 @@
 
 <script>
   // Keep YouTube's scripts, fonts, and network requests out of the first render.
-  const container = document.querySelector<HTMLElement>("[data-video-player]");
-  const button = container?.querySelector<HTMLButtonElement>("button");
-  const fallback = container?.querySelector<HTMLAnchorElement>("a");
+  const container = document.querySelector<HTMLElement>('[data-video-player]');
+  const button = container?.querySelector<HTMLButtonElement>('button');
+  const fallback = container?.querySelector<HTMLAnchorElement>('a');
   if (container && button && fallback) {
     button.hidden = false;
     fallback.hidden = true;
     button.addEventListener(
-      "click",
+      'click',
       () => {
-        const player = document.createElement("iframe");
+        const player = document.createElement('iframe');
         player.src =
-          "https://www.youtube-nocookie.com/embed/oqgHnKCRmLE?autoplay=1";
+          'https://www.youtube-nocookie.com/embed/oqgHnKCRmLE?autoplay=1';
         player.title =
-          "Nottingham Space Society — hybrid rocket engine footage";
+          'Nottingham Space Society — hybrid rocket engine footage';
         player.allow =
-          "autoplay; encrypted-media; picture-in-picture; fullscreen";
+          'autoplay; encrypted-media; picture-in-picture; fullscreen';
         player.allowFullscreen = true;
-        player.referrerPolicy = "strict-origin-when-cross-origin";
+        player.referrerPolicy = 'strict-origin-when-cross-origin';
         container.replaceChildren(player);
         player.focus();
       },

@@ -1,10 +1,10 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import "../styles/cards.css";
-import OptimizedImage from "./OptimizedImage.astro";
+import type { CollectionEntry } from 'astro:content';
+import '../styles/cards.css';
+import OptimizedImage from './OptimizedImage.astro';
 
 interface Props {
-  project: CollectionEntry<"projects">;
+  project: CollectionEntry<'projects'>;
   featured?: boolean;
 }
 const { project, featured = false } = Astro.props;
@@ -13,18 +13,21 @@ const feature = featured ? data.featured : undefined;
 ---
 
 <a
-  class={featured ? "featured-project" : "project-photo-card"}
+  class={featured ? 'featured-project' : 'project-photo-card'}
   href={`/projects/${project.id}.html`}
 >
   <div
     class:list={[
-      featured ? "project-image" : "project-photo",
-      { "project-badge": !featured && data.badge },
+      featured ? 'project-image' : 'project-photo',
+      { 'project-badge': !featured && data.badge },
     ]}
   >
-    <OptimizedImage src={data.image} alt={data.imageAlt} />
+    <OptimizedImage
+      src={data.image}
+      alt={data.imageAlt}
+    />
   </div>
-  <div class={featured ? "project-card-label" : "project-photo-caption"}>
+  <div class={featured ? 'project-card-label' : 'project-photo-caption'}>
     <div>
       {feature && <span class="mono">{feature.category}</span>}
       <h3>{feature?.title ?? data.title}</h3>
@@ -34,7 +37,10 @@ const feature = featured ? data.featured : undefined;
         <span class="mono">{data.category}</span>
       )}
     </div>
-    <span class="project-card-arrow" aria-hidden="true">
+    <span
+      class="project-card-arrow"
+      aria-hidden="true"
+    >
       ↗
     </span>
   </div>

@@ -1,19 +1,19 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import SiteLayout from "../../layouts/SiteLayout.astro";
-import OptimizedImage from "../../components/OptimizedImage.astro";
-import "../../styles/project.css";
-import "../../styles/cards.css";
+import { getCollection, type CollectionEntry } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import OptimizedImage from '../../components/OptimizedImage.astro';
+import '../../styles/project.css';
+import '../../styles/cards.css';
 
 export async function getStaticPaths() {
-  return (await getCollection("projects")).map((project) => ({
+  return (await getCollection('projects')).map((project) => ({
     params: { slug: project.id },
     props: { project },
   }));
 }
 
 interface Props {
-  project: CollectionEntry<"projects">;
+  project: CollectionEntry<'projects'>;
 }
 const { project } = Astro.props;
 const { data } = project;
@@ -23,8 +23,15 @@ const { data } = project;
   title={`${data.title} — Nottingham Space Society`}
   description={data.description}
 >
-  <main id="main" tabindex="-1" class="project-page">
-    <a class="project-back mono" href="/projects.html">
+  <main
+    id="main"
+    tabindex="-1"
+    class="project-page"
+  >
+    <a
+      class="project-back mono"
+      href="/projects.html"
+    >
       ← ALL PROJECTS
     </a>
     <div class="project-page-heading">
@@ -33,7 +40,7 @@ const { data } = project;
     </div>
     <div class="project-page-layout">
       <figure class="project-page-figure">
-        <div class:list={["project-photo", { "project-badge": data.badge }]}>
+        <div class:list={['project-photo', { 'project-badge': data.badge }]}>
           <OptimizedImage
             src={data.image}
             alt={data.imageAlt}
@@ -43,7 +50,10 @@ const { data } = project;
         </div>
         <figcaption class="mono">{data.category}</figcaption>
       </figure>
-      <section class="project-page-copy" aria-labelledby="overview-title">
+      <section
+        class="project-page-copy"
+        aria-labelledby="overview-title"
+      >
         <h2 id="overview-title">The project</h2>
         <p>{data.description}</p>
         <a

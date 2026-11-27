@@ -1,9 +1,9 @@
 ---
-import NavigationLinks from "./NavigationLinks.astro";
-import OptimizedImage from "./OptimizedImage.astro";
-import logo from "../assets/nottingham-space-society.png";
-import { socialLinks } from "../data/navigation";
-import "../styles/navigation.css";
+import NavigationLinks from './NavigationLinks.astro';
+import OptimizedImage from './OptimizedImage.astro';
+import logo from '../assets/nottingham-space-society.png';
+import { socialLinks } from '../data/navigation';
+import '../styles/navigation.css';
 
 interface Props {
   home?: boolean;
@@ -11,8 +11,12 @@ interface Props {
 const { home = false } = Astro.props;
 ---
 
-<header class:list={["site-header", { "landing-header": home }]}>
-  <a class="brand" href="/index.html" aria-label="SpaceSoc home">
+<header class:list={['site-header', { 'landing-header': home }]}>
+  <a
+    class="brand"
+    href="/index.html"
+    aria-label="SpaceSoc home"
+  >
     <OptimizedImage
       src={logo}
       alt="Nottingham Space Society"
@@ -21,10 +25,17 @@ const { home = false } = Astro.props;
       loading="eager"
     />
   </a>
-  <nav class="desktop-nav" aria-label="Main navigation">
+  <nav
+    class="desktop-nav"
+    aria-label="Main navigation"
+  >
     <NavigationLinks home={home} />
   </nav>
-  <div class="social-links" role="group" aria-label="Follow SpaceSoc">
+  <div
+    class="social-links"
+    role="group"
+    aria-label="Follow SpaceSoc"
+  >
     {socialLinks.map(({ label, url, viewBox, path, transform }) => (
       <a
         href={url}
@@ -39,22 +50,31 @@ const { home = false } = Astro.props;
           aria-hidden="true"
           focusable="false"
         >
-          <path d={path} transform={transform} />
+          <path
+            d={path}
+            transform={transform}
+          />
         </svg>
       </a>
     ))}
   </div>
   <details class="mobile-menu">
-    <summary class="menu" role="button">
+    <summary
+      class="menu"
+      role="button"
+    >
       Menu <span aria-hidden="true">+</span>
     </summary>
-    <nav id="mobile-nav" aria-label="Mobile navigation">
+    <nav
+      id="mobile-nav"
+      aria-label="Mobile navigation"
+    >
       <NavigationLinks home={home} />
     </nav>
   </details>
 </header>
 
 <script>
-  import { initializeNavigation } from "../scripts/navigation";
+  import { initializeNavigation } from '../scripts/navigation';
   initializeNavigation();
 </script>

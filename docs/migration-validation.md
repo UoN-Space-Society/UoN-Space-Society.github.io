@@ -72,3 +72,24 @@ network performance, field Core Web Vitals, other browser engines and GitHub's
 hosted Actions run still need their own verification. Astro's image processing
 also adds work to a clean build; it is not a claim that builds are faster than
 copying static files.
+
+## Reconciliation with later dev changes
+
+The conflict resolution preserves dev's compact contact section, removes its
+redundant video link and homepage back-to-top control, and retains the
+translucent sliding navigation. Navigation uses native details and CSS size
+interpolation rather than a second JavaScript height/state implementation.
+Browsers without size interpolation keep working native navigation; reduced
+motion disables the slide.
+
+Shared EditorConfig and formatter settings are retained with Astro support.
+Formatted SVGs were checked for equivalent geometry, text and styling. Legacy
+HTML and the old copy-build script remain removed. The lockfile was regenerated
+from the combined package configuration and installed with `npm ci`.
+
+Additional acceptance tests cover the compact contact section and dropdown
+layout across resizing. The full result is **72 passing browser tests**, three
+passing build checks, and no Astro/TypeScript diagnostics. The resize case also
+passed ten repeated desktop/mobile executions. A manual check confirmed the
+native slide interpolates its height and the open menu passes automated WCAG
+AA checks.

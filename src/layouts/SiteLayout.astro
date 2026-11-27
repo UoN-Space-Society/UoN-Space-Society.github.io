@@ -1,9 +1,9 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import "../styles/fonts.css";
-import primaryFont from "@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url";
-import "../styles/global.css";
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/fonts.css';
+import primaryFont from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 const { title, description, home = false } = Astro.props;
 const canonical = new URL(
-  Astro.url.pathname === "/" ? "/index.html" : Astro.url.pathname,
+  Astro.url.pathname === '/' ? '/index.html' : Astro.url.pathname,
   Astro.site,
 );
 ---
@@ -21,11 +21,23 @@ const canonical = new URL(
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#eeeae2" />
-    <meta name="description" content={description} />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      name="theme-color"
+      content="#eeeae2"
+    />
+    <meta
+      name="description"
+      content={description}
+    />
     <title>{title}</title>
-    <link rel="canonical" href={canonical} />
+    <link
+      rel="canonical"
+      href={canonical}
+    />
     <link
       rel="preload"
       href={primaryFont}
@@ -40,12 +52,18 @@ const canonical = new URL(
       sizes="64x64"
     />
   </head>
-  <body id="top" class:list={{ "home-page": home }}>
-    <a class="skip" href="#main">
+  <body
+    id="top"
+    class:list={{ 'home-page': home }}
+  >
+    <a
+      class="skip"
+      href="#main"
+    >
       Skip to content
     </a>
     <Header home={home} />
     <slot />
-    <Footer />
+    <Footer home={home} />
   </body>
 </html>

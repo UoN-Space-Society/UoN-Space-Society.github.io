@@ -18,7 +18,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: "DM Sans Variable", Arial, sans-serif;
+  font-family: 'DM Sans Variable', Arial, sans-serif;
 }
 a {
   color: inherit;
@@ -43,7 +43,7 @@ img {
   max-width: 100%;
 }
 .mono {
-  font-family: "Space Mono", monospace;
+  font-family: 'Space Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.06em;
   line-height: 1.6;
@@ -79,7 +79,7 @@ h2 > span {
   color: #7c8371;
 }
 em {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: Georgia, 'Times New Roman', serif;
   font-weight: 400;
   letter-spacing: -0.065em;
 }

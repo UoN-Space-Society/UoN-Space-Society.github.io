@@ -1,5 +1,5 @@
 ---
-import { navigationLinks } from "../data/navigation";
+import { navigationLinks } from '../data/navigation';
 
 interface Props {
   home?: boolean;
@@ -11,14 +11,14 @@ const pathname = Astro.url.pathname;
 {navigationLinks.map(({ label, href }) => (
   <a
     href={
-      home && href.startsWith("/index.html#")
-        ? href.replace("/index.html", "")
+      home && href.startsWith('/index.html#')
+        ? href.replace('/index.html', '')
         : href
     }
     aria-current={
       pathname === href ||
-      (href === "/projects.html" && pathname.startsWith("/projects/"))
-        ? "page"
+      (href === '/projects.html' && pathname.startsWith('/projects/'))
+        ? 'page'
         : undefined
     }
   >

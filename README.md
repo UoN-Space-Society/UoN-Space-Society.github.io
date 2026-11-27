@@ -104,8 +104,12 @@ The rest of the site uses an editorial field-notes identity: warm paper, forest 
 
 Society activities and community links are based on https://su.nottingham.ac.uk/activities/view/spacesoc and https://linktr.ee/spacesoc. HELIA information: https://projecthelia.org/. Events link to the community rather than presenting unverified dates. Project illustrations are original conceptual SVG/CSS drawings, not photographs of society hardware.
 
-Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in assets/moon.jpg. DM Sans and Space Mono are self-hosted WOFF2 fonts with system fallbacks. Their OFL licences ship in `public/licenses/`. Astro generates static HTML and optimises raster images at build time. The video player connects to YouTube only after a visitor presses Play. No first-party cookies or analytics.
+Moon rendering: NASA / LRO / Scientific Visualization Studio / Ernie Wright, https://svs.gsfc.nasa.gov/5415/. Locally stored in src/assets/moon.jpg. DM Sans and Space Mono are self-hosted WOFF2 fonts with system fallbacks. Their OFL licences ship in `public/licenses/`. Astro generates static HTML and optimises raster images at build time. The video player connects to YouTube only after a visitor presses Play. No first-party cookies or analytics.
 
 Before public launch, the committee should review copy, contact links and current project availability, and can replace conceptual illustrations with its own project photographs.
 
 Header social icons: Instagram, YouTube and LinkedIn SVG paths extracted from the Font Awesome font served by https://purdueseds.space/wp-content/themes/salient/css/fonts/fontawesome-webfont.svg. Discord uses Font Awesome 6 Free Brands (https://github.com/FortAwesome/Font-Awesome). Font Awesome icons are licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Icons are embedded locally; social links open in a new tab.
+
+## Code formatting
+
+Run `npm ci` once to install the formatter. Use `npm run format` to format Astro, HTML, CSS, TypeScript, JavaScript, JSON, SVG and workflow files, and `npm run format:check` to check formatting. The shared settings use two-space indentation, an 80-column target and one HTML attribute per line. Generated output and local files are excluded.
