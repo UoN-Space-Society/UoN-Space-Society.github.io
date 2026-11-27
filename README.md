@@ -142,7 +142,9 @@ to disable the integration.
    googletagmanager.com or google-analytics.com. Check nested project pages too.
 
 The banner offers equal accept/reject controls, remembers the choice for 180 days
-in local storage, and includes a persistent Analytics settings button. Withdrawal
+in local storage, and includes an Analytics settings link in the footer.
+The compact consent notice appears only until a choice is saved; the settings
+control does not float over page content. Withdrawal
 stops collection and clears GA cookies accessible to this site. Blocked storage
 falls back to a choice for the current page. Advertising consent stays denied.
 Only consenting visitors appear in reports; ad blockers can also reduce counts.

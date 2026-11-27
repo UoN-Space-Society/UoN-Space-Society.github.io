@@ -85,12 +85,12 @@
       }
     }
     panel.hidden = true;
-    settings.focus();
+    settings.focus({ preventScroll: true });
   }
   const panel = document.createElement('section');
   panel.className = 'analytics-consent';
   panel.setAttribute('aria-label', 'Analytics cookies');
-  panel.innerHTML = `<p>May we use Google Analytics cookies to understand visits, traffic sources and link clicks and improve this website? Google receives usage data only if you accept. Your choice is saved on this device for six months. You can change it using Analytics settings.</p><div><button type="button" data-choice="accepted">Accept analytics</button><button type="button" data-choice="rejected">Reject analytics</button></div>`;
+  panel.innerHTML = `<p>Allow Google Analytics cookies to help us improve the website? Google receives usage data if you accept. Change your choice anytime in the footer.</p><div><button type="button" data-choice="accepted">Accept analytics</button><button type="button" data-choice="rejected">Reject analytics</button></div>`;
   panel.hidden = choice === 'accepted' || choice === 'rejected';
   panel
     .querySelectorAll('button')
@@ -105,7 +105,8 @@
     panel.hidden = !panel.hidden;
     if (!panel.hidden) panel.querySelector('button').focus();
   });
-  document.body.append(panel, settings);
+  document.body.append(panel);
+  (document.querySelector('footer') || document.body).append(settings);
   if (choice === 'accepted') start();
   document.addEventListener('click', (event) => {
     if (choice !== 'accepted' || !started) return;
