@@ -14,9 +14,20 @@ import '../styles/sponsors.css';
     tabindex="-1"
     class="sponsors-page"
   >
+    <section
+      class="sponsor-enquiry"
+      aria-labelledby="sponsor-enquiry-title"
+    >
+      <h1 id="sponsor-enquiry-title">Looking to sponsor us?</h1>
+      <p>
+        Interested in supporting Nottingham Space Society and our student
+        projects? Email <a href="mailto:space@uonsu.com">space@uonsu.com</a> to
+        discuss sponsorship opportunities.
+      </p>
+    </section>
     <section aria-labelledby="sponsors-title">
       <div class="sponsors-heading">
-        <h1 id="sponsors-title">Previous sponsors</h1>
+        <h2 id="sponsors-title">Previous sponsors</h2>
       </div>
       <ul class="sponsors-grid">
         {sponsors.map((sponsor) => {
