@@ -76,10 +76,10 @@
 }
 .home-page #main > .section {
   position: relative;
-  background: var(--background);
+  background: var(--paper);
 }
 .home-page #main > .projects {
-  background: var(--background);
+  background: #e3e4d9;
   border-top: 1px solid var(--line);
 }
 .home-sponsor-logos {
@@ -209,7 +209,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: var(--background);
+  background: #1c2926;
 }
 .project-collage img {
   display: block;

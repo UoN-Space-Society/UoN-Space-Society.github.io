@@ -12,7 +12,7 @@
 .project-image {
   aspect-ratio: 7/4;
   overflow: hidden;
-  background: var(--background);
+  background: #1c2926;
 }
 .project-image img,
 .project-photo img {
@@ -63,7 +63,7 @@
 .project-photo {
   aspect-ratio: 3/2;
   overflow: hidden;
-  background: #1b354d;
+  background: #d5d9c8;
 }
 .project-photo-caption h3 {
   font-size: clamp(23px, 2.3vw, 32px);
@@ -78,7 +78,7 @@
   text-decoration-thickness: 1px;
 }
 .project-badge {
-  background: var(--background);
+  background: #202c27;
   padding: 15%;
 }
 .project-badge img {

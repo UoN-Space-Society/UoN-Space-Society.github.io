@@ -1,11 +1,11 @@
 /* Shared design tokens, typography, and small interface primitives. */
 :root {
-  --background: #10263b;
-  --text: #f5f3ed;
-  --accent: #ecc05a;
-  --highlight: #ecc05a;
-  --line: #526476;
-  --muted: #c3cdd6;
+  --paper: #eeeae2;
+  --ink: #242820;
+  --green: #344a36;
+  --lime: #d5ee85;
+  --line: #c9c9bb;
+  --muted: #63675e;
 }
 * {
   box-sizing: border-box;
@@ -16,8 +16,8 @@ html {
 }
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   font-family: 'DM Sans Variable', Arial, sans-serif;
 }
 a {
@@ -36,7 +36,7 @@ summary {
   touch-action: manipulation;
 }
 :where(a, button, summary):focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid #526b20;
   outline-offset: 6px;
 }
 img {
@@ -52,8 +52,8 @@ img {
   position: fixed;
   top: -100px;
   left: 20px;
-  background: var(--highlight);
-  color: var(--background);
+  background: var(--lime);
+  color: var(--ink);
   padding: 16px;
   z-index: 20;
 }
@@ -76,7 +76,7 @@ h2 {
   margin: 0;
 }
 h2 > span {
-  color: var(--accent);
+  color: #7c8371;
 }
 em {
   font-family: Georgia, 'Times New Roman', serif;
@@ -84,7 +84,7 @@ em {
   letter-spacing: -0.065em;
 }
 h1 em {
-  color: var(--accent);
+  color: var(--green);
 }
 .section {
   padding: 85px 4.5%;
@@ -120,15 +120,15 @@ h1 em {
   font-size: 21px;
 }
 .text-link:hover {
-  color: var(--accent);
+  color: var(--green);
 }
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 30px;
-  background: var(--accent);
-  color: var(--background);
+  background: var(--green);
+  color: #fff;
   padding: 18px 22px;
   font-size: 12px;
   transition:
@@ -140,12 +140,12 @@ h1 em {
   line-height: 1;
 }
 .button:hover {
-  background: #f5d58b;
+  background: #202e21;
   transform: translateY(-2px);
 }
 .site-footer {
   position: relative;
-  background: var(--background);
+  background: var(--paper);
   border-top: 1px solid var(--line);
   padding: 35px 4.5%;
   display: flex;
