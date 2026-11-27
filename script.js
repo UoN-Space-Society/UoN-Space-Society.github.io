@@ -1,12 +1,28 @@
 const menu = document.querySelector('.menu');
 const mobileNav = document.getElementById('mobile-nav');
-function closeMenu() { menu.setAttribute('aria-expanded', 'false'); mobileNav.hidden = true; menu.textContent = 'Menu +'; }
-menu.addEventListener('click', () => {
-  const open = menu.getAttribute('aria-expanded') !== 'true';
-  menu.setAttribute('aria-expanded', String(open)); mobileNav.hidden = !open; menu.textContent = open ? 'Close −' : 'Menu +';
-});
+const menuBreakpoint = window.matchMedia('(max-width: 800px)');
+// Keep the panel mounted so CSS can animate both opening and closing.
+mobileNav.hidden = false;
+mobileNav.inert = true;
+mobileNav.setAttribute('aria-hidden', 'true');
+function setMenuOpen(open) {
+  menu.setAttribute('aria-expanded', String(open));
+  menu.textContent = open ? 'Close −' : 'Menu +';
+  mobileNav.inert = !open;
+  mobileNav.setAttribute('aria-hidden', String(!open));
+  mobileNav.classList.toggle('is-open', open);
+  mobileNav.style.height = open ? `${mobileNav.scrollHeight}px` : '0px';
+}
+function closeMenu() { setMenuOpen(false); }
+menu.addEventListener('click', () => setMenuOpen(menu.getAttribute('aria-expanded') !== 'true'));
 mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-document.addEventListener('keydown', event => { if (event.key === 'Escape' && !mobileNav.hidden) { closeMenu(); menu.focus(); } });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { closeMenu(); menu.focus(); }
+});
+window.addEventListener('resize', () => {
+  if (!menuBreakpoint.matches) closeMenu();
+  else if (menu.getAttribute('aria-expanded') === 'true') mobileNav.style.height = `${mobileNav.scrollHeight}px`;
+});
 
 // The following section covers the sticky hero as its photo fades out.
 const landingHero = document.querySelector('.landing-hero');
