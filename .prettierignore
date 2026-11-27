@@ -3,9 +3,11 @@ dist/
 coverage/
 .astro/
 test-results/
+playwright-report/
 .openai/
 .private/
 .vercel/
 .env
 .env.*
 package-lock.json
+public/

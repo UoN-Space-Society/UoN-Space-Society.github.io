@@ -1,0 +1,51 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import SponsorLogo from '../components/SponsorLogo.astro';
+import sponsors from '../data/sponsors.json';
+import '../styles/sponsors.css';
+---
+
+<SiteLayout
+  title="Sponsors — Nottingham Space Society"
+  description="Meet the organisations that have supported Nottingham Space Society’s student engineering and space projects."
+>
+  <main
+    id="main"
+    tabindex="-1"
+    class="sponsors-page"
+  >
+    <section aria-labelledby="sponsors-title">
+      <div class="sponsors-heading">
+        <h1 id="sponsors-title">Previous sponsors</h1>
+      </div>
+      <ul class="sponsors-grid">
+        {sponsors.map((sponsor) => {
+          const Tag = sponsor.url ? 'a' : 'div';
+          return (
+            <li>
+              <Tag
+                class="sponsor-card"
+                href={sponsor.url}
+                target={sponsor.url ? '_blank' : undefined}
+                rel={sponsor.url ? 'noopener noreferrer' : undefined}
+              >
+                <div class="sponsor-logo">
+                  <SponsorLogo
+                    image={sponsor.image}
+                    alt={sponsor.alt}
+                  />
+                </div>
+                <div class="sponsor-caption">
+                  <h2>{sponsor.name}</h2>
+                  {sponsor.note && (
+                    <span class="sponsor-note">{sponsor.note}</span>
+                  )}
+                </div>
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  </main>
+</SiteLayout>

@@ -1,0 +1,12 @@
+{
+  "title": "Project SAMPO",
+  "category": "BUSINESS COMPETITION",
+  "description": "An earlier society business competition submission.",
+  "image": "../../assets/projects/sampo.jpg",
+  "imageAlt": "Project SAMPO concept rendering",
+  "badge": false,
+  "group": "archive",
+  "order": 2,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

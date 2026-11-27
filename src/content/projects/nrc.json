@@ -1,0 +1,12 @@
+{
+  "title": "National Rocketry Championship",
+  "category": "NRC COMPETITION BADGE",
+  "description": "Five teams of first- and second-year students designing, building and flying rockets.",
+  "image": "../../assets/projects/nrc.png",
+  "imageAlt": "National Rocketry Championship badge",
+  "badge": true,
+  "group": "upcoming",
+  "order": 4,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

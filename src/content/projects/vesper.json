@@ -1,0 +1,12 @@
+{
+  "title": "Project Vesper",
+  "category": "SATELLITE COMPETITION BADGE",
+  "description": "The society’s 2023 satellite competition project.",
+  "image": "../../assets/projects/vigil.png",
+  "imageAlt": "Satellite competition badge",
+  "badge": true,
+  "group": "archive",
+  "order": 1,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

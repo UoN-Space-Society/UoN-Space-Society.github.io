@@ -1,0 +1,227 @@
+.site-header {
+  position: relative;
+  margin: 0 4.5%;
+  height: 140px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  z-index: 5;
+}
+.brand {
+  display: block;
+  flex-shrink: 0;
+}
+.brand img {
+  display: block;
+  width: 180px;
+  height: 120px;
+  object-fit: contain;
+}
+.desktop-nav {
+  display: flex;
+  gap: 28px;
+  font-size: 12px;
+}
+.desktop-nav a[aria-current='page'],
+#mobile-nav a[aria-current='page'] {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.site-header a:hover {
+  color: var(--green);
+}
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.social-links a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 44px;
+  transition: color 0.2s;
+}
+.social-links svg {
+  display: block;
+  width: 21px;
+  height: 23px;
+  fill: currentColor;
+}
+.mobile-menu {
+  display: none;
+}
+.menu {
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 10px 14px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.menu::-webkit-details-marker {
+  display: none;
+}
+.mobile-menu[open] .menu span {
+  display: inline-block;
+  transform: rotate(45deg);
+}
+#mobile-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 5%;
+  border: 0;
+  background: rgb(238 234 226 / 82%);
+  color: var(--ink);
+  font-size: 15px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+#mobile-nav a {
+  display: block;
+  flex-shrink: 0;
+  padding: 15px 0;
+}
+#mobile-nav a:first-child {
+  margin-top: 12px;
+}
+#mobile-nav a:last-child {
+  margin-bottom: 12px;
+}
+.landing-header #mobile-nav {
+  background: rgb(12 31 53 / 35%);
+  color: #fff;
+}
+.landing-header {
+  position: absolute;
+  inset: 0 0 auto;
+  margin: 0;
+  padding: 0 6%;
+  height: 132px;
+  border: 0;
+  color: #fff;
+  background: linear-gradient(#07132170, transparent);
+}
+.landing-header .brand img {
+  width: 174px;
+  height: 116px;
+  filter: brightness(0) invert(1);
+}
+.landing-header .desktop-nav {
+  font-size: 14px;
+}
+.landing-header a:hover {
+  color: var(--lime);
+}
+@media (min-width: 1101px) and (max-width: 1250px) {
+  .site-header,
+  .landing-header {
+    gap: 14px;
+  }
+  .desktop-nav,
+  .landing-header .desktop-nav {
+    gap: 16px;
+    font-size: 11px;
+  }
+  .social-links {
+    gap: 2px;
+  }
+  .social-links a {
+    width: 30px;
+  }
+}
+@media (max-width: 1100px) {
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-menu {
+    display: block;
+  }
+  .social-links {
+    margin-left: auto;
+  }
+  .landing-header {
+    padding: 0 4.5%;
+  }
+  .landing-header .menu {
+    border-color: #ffffff80;
+  }
+}
+@media (max-width: 650px) {
+  .site-header {
+    height: 116px;
+    gap: 8px;
+  }
+  .brand img {
+    width: 110px;
+    height: 100px;
+  }
+  .landing-header {
+    height: 104px;
+    padding: 0 5%;
+  }
+  .landing-header .brand img {
+    width: 110px;
+    height: 92px;
+  }
+  .social-links {
+    gap: 0;
+  }
+  .social-links a {
+    width: 29px;
+  }
+  .social-links svg {
+    width: 18px;
+    height: 20px;
+  }
+  .menu {
+    padding: 10px;
+  }
+}
+@media (max-width: 360px) {
+  .social-links a {
+    width: 24px;
+  }
+  .brand img,
+  .landing-header .brand img {
+    width: 90px;
+  }
+}
+
+/* Native details still opens instantly in browsers without size interpolation. */
+@supports (interpolate-size: allow-keywords) {
+  @media (max-width: 1100px) {
+    .mobile-menu::details-content {
+      position: absolute;
+      inset: 100% 0 auto;
+      block-size: 0;
+      overflow: clip;
+      content-visibility: hidden;
+      interpolate-size: allow-keywords;
+      transition:
+        block-size 420ms cubic-bezier(0.4, 0, 0.2, 1),
+        content-visibility 420ms allow-discrete;
+    }
+    .mobile-menu[open]::details-content {
+      block-size: auto;
+      content-visibility: visible;
+    }
+    .mobile-menu #mobile-nav {
+      position: static;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu::details-content {
+    transition: none;
+  }
+}

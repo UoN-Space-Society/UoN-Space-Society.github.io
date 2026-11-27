@@ -1,0 +1,12 @@
+{
+  "title": "Project STARK",
+  "category": "EUROC COMPETITION BADGE",
+  "description": "A liquid-fuelled rocket combining a cooled bipropellant engine, active control and a CanSat payload. The team is targeting EuRoC 2028’s 3 km liquid category.",
+  "image": "../../assets/projects/stark.png",
+  "imageAlt": "EuRoC competition badge",
+  "badge": true,
+  "group": "upcoming",
+  "order": 1,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

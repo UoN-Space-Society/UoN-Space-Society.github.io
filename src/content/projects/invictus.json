@@ -1,0 +1,12 @@
+{
+  "title": "Project INVICTUS",
+  "category": "ROVER COMPETITION BADGE",
+  "description": "A rover mission to photograph geology at the Airbus Stevenage Mars Yard and return images for analysis.",
+  "image": "../../assets/projects/invictus.png",
+  "imageAlt": "Rover competition badge",
+  "badge": true,
+  "group": "upcoming",
+  "order": 3,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

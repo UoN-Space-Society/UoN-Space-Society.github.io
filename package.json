@@ -3,13 +3,34 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "python3 -m http.server 4173 --bind 127.0.0.1",
-    "build": "node build.mjs",
-    "check": "node --check script.js",
-    "format": "prettier --write \"**/*.{html,css,js,mjs,json,yml,yaml,svg}\"",
-    "format:check": "prettier --check \"**/*.{html,css,js,mjs,json,yml,yaml,svg}\""
+    "dev": "astro dev --host 127.0.0.1 --port 4173",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1 --port 4173",
+    "check": "astro check",
+    "test": "npm run build && npm run test:build && npm run test:browser",
+    "test:build": "node --test tests/build.test.mjs",
+    "test:browser": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource/space-mono": "^5.3.0",
+    "astro": "^7.4.13",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "prettier": "3.10.1"
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.1",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.11",
+    "cheerio": "^1.2.0",
+    "prettier": "3.10.1",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^6.0.3"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.4"
   }
 }
