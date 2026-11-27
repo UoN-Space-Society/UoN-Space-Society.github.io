@@ -1,0 +1,12 @@
+{
+  "title": "Project Siderus",
+  "category": "SATELLITE COMPETITION BADGE",
+  "description": "An autonomous 3U CubeSat using LiDAR, an inertial measurement unit and QR decoding to characterise mock craters.",
+  "image": "../../assets/projects/siderus.jpg",
+  "imageAlt": "Satellite competition badge",
+  "badge": true,
+  "group": "recent",
+  "order": 2,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Rocket Propulsion Software + Engineering",
+    "image": "rocket-propulsion-transparent.png",
+    "alt": "Rocket Propulsion Software + Engineering logo",
+    "url": "https://www.rocket-propulsion.com/",
+    "note": ""
+  },
+  {
+    "name": "Accu",
+    "image": "accu-transparent.png",
+    "alt": "Accu logo",
+    "url": "https://www.accu.co.uk/",
+    "note": ""
+  },
+  {
+    "name": "Ansys",
+    "image": "ansys.svg",
+    "alt": "Ansys logo",
+    "url": "https://www.ansys.com/",
+    "note": ""
+  },
+  {
+    "name": "CPI Pneumatics",
+    "image": "cpi-official.png",
+    "alt": "CPI Pneumatics logo",
+    "note": ""
+  },
+  {
+    "name": "REXUS / BEXUS programme",
+    "image": "rexus-bexus-transparent.png",
+    "alt": "REXUS / BEXUS programme logo",
+    "url": "https://rexusbexus.net/",
+    "note": "ESA / DLR / SNSA / SSC / ZARM / EuroLaunch"
+  },
+  {
+    "name": "Hamamatsu",
+    "image": "hamamatsu.svg",
+    "alt": "Hamamatsu logo",
+    "url": "https://www.hamamatsu.com/",
+    "note": ""
+  },
+  {
+    "name": "IMechE East Midlands",
+    "image": "imeche-official.png",
+    "alt": "IMechE East Midlands logo",
+    "url": "https://www.imeche.org/",
+    "note": ""
+  },
+  {
+    "name": "Onshape",
+    "image": "onshape.svg",
+    "alt": "Onshape logo",
+    "url": "https://www.onshape.com/",
+    "note": ""
+  },
+  {
+    "name": "RS",
+    "image": "rs-transparent.png",
+    "alt": "RS logo",
+    "url": "https://uk.rs-online.com/",
+    "note": ""
+  },
+  {
+    "name": "UoN Cascade Grants Programme",
+    "image": "cascade-transparent.png",
+    "alt": "UoN Cascade Grants Programme logo",
+    "note": ""
+  },
+  {
+    "name": "UoN Biodiscovery Institute",
+    "image": "biodiscovery-transparent.png",
+    "alt": "UoN Biodiscovery Institute logo",
+    "note": ""
+  },
+  {
+    "name": "UoN MMME department",
+    "image": "nottingham.svg",
+    "alt": "UoN MMME department logo",
+    "note": ""
+  },
+  {
+    "name": "UoN EEE department",
+    "image": "nottingham.svg",
+    "alt": "UoN EEE department logo",
+    "note": ""
+  },
+  {
+    "name": "UoN Physics Department",
+    "image": "nottingham.svg",
+    "alt": "UoN Physics Department logo",
+    "note": ""
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "title": "Project HELIA",
+  "category": "BEXUS 39 / 2026",
+  "description": "A BEXUS 39 payload measuring fluorescence in live yeast cells in stratospheric conditions. HELIA flew in October 2026, and its cells survived.",
+  "image": "../../assets/projects/helia.jpg",
+  "imageAlt": "Project HELIA cylindrical payload illuminated during testing",
+  "badge": false,
+  "group": "recent",
+  "order": 0,
+  "url": "https://projecthelia.org/",
+  "linkLabel": "Visit Project HELIA",
+  "featured": {
+    "title": "Project HELIA",
+    "category": "BEXUS 39 / STRATOSPHERIC BIOLOGY",
+    "tagline": "Exploring life at the edge of space."
+  }
+}

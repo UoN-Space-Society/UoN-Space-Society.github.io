@@ -1,0 +1,37 @@
+---
+import OptimizedImage from "./OptimizedImage.astro";
+import logo from "../assets/nottingham-space-society.png";
+---
+
+<footer class="site-footer">
+  <a
+    class="footer-brand"
+    href="/index.html"
+    aria-label="Nottingham Space Society home"
+  >
+    <OptimizedImage
+      src={logo}
+      alt="Nottingham Space Society"
+      widths={[180, 360]}
+      sizes="180px"
+    />
+  </a>
+  <div class="mono">
+    UNIVERSITY OF NOTTINGHAM
+    <br />A BRANCH OF UKSEDS
+  </div>
+  <div class="mono">
+    MADE FOR THE CURIOUS.
+    <br />
+    <a
+      href="https://linktr.ee/spacesoc"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      FIND OUR COMMUNITY ↗
+    </a>
+  </div>
+  <a href="#top" class="top-link" aria-label="Back to top">
+    ↑
+  </a>
+</footer>

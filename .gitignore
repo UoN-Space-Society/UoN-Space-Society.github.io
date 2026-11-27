@@ -26,9 +26,8 @@ coverage/
 *.swp
 *.swo
 
-# Astro generated types and temporary legacy assets
+# Astro generated types
 .astro/
-.astro-public/
 
 # Browser test artifacts
 test-results/

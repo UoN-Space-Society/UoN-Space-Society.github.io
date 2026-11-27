@@ -1,0 +1,12 @@
+{
+  "title": "Project Vector",
+  "category": "CUBESAT / 2024–25",
+  "description": "The society’s 2024–25 CubeSat project.",
+  "image": "../../assets/projects/vector.jpg",
+  "imageAlt": "Project Vector CubeSat",
+  "badge": false,
+  "group": "archive",
+  "order": 0,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

@@ -1,0 +1,27 @@
+---
+import { navigationLinks } from "../data/navigation";
+
+interface Props {
+  home?: boolean;
+}
+const { home = false } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+{navigationLinks.map(({ label, href }) => (
+  <a
+    href={
+      home && href.startsWith("/index.html#")
+        ? href.replace("/index.html", "")
+        : href
+    }
+    aria-current={
+      pathname === href ||
+      (href === "/projects.html" && pathname.startsWith("/projects/"))
+        ? "page"
+        : undefined
+    }
+  >
+    {label}
+  </a>
+))}

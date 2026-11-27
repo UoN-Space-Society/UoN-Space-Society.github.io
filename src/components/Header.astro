@@ -1,0 +1,60 @@
+---
+import NavigationLinks from "./NavigationLinks.astro";
+import OptimizedImage from "./OptimizedImage.astro";
+import logo from "../assets/nottingham-space-society.png";
+import { socialLinks } from "../data/navigation";
+import "../styles/navigation.css";
+
+interface Props {
+  home?: boolean;
+}
+const { home = false } = Astro.props;
+---
+
+<header class:list={["site-header", { "landing-header": home }]}>
+  <a class="brand" href="/index.html" aria-label="SpaceSoc home">
+    <OptimizedImage
+      src={logo}
+      alt="Nottingham Space Society"
+      widths={[180, 360]}
+      sizes="(max-width: 650px) 110px, 180px"
+      loading="eager"
+    />
+  </a>
+  <nav class="desktop-nav" aria-label="Main navigation">
+    <NavigationLinks home={home} />
+  </nav>
+  <div class="social-links" role="group" aria-label="Follow SpaceSoc">
+    {socialLinks.map(({ label, url, viewBox, path, transform }) => (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${label} (opens in a new tab)`}
+        title={label}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={viewBox}
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d={path} transform={transform} />
+        </svg>
+      </a>
+    ))}
+  </div>
+  <details class="mobile-menu">
+    <summary class="menu" role="button">
+      Menu <span aria-hidden="true">+</span>
+    </summary>
+    <nav id="mobile-nav" aria-label="Mobile navigation">
+      <NavigationLinks home={home} />
+    </nav>
+  </details>
+</header>
+
+<script>
+  import { initializeNavigation } from "../scripts/navigation";
+  initializeNavigation();
+</script>

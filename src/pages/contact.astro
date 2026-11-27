@@ -1,0 +1,36 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/contact.css";
+---
+
+<SiteLayout
+  title="Contact Us — Nottingham Space Society"
+  description="Get in touch with Nottingham Space Society about membership, projects, sponsorship and collaborations."
+>
+  <main id="main" tabindex="-1" class="contact-page">
+    <section class="contact-heading" aria-labelledby="contact-title">
+      <p class="mono">LET’S START A CONVERSATION</p>
+      <h1 id="contact-title">
+        Contact <em>us.</em>
+      </h1>
+      <p>
+        Curious about joining? Have a project in mind? Want to support what we
+        do? We’d love to hear from you.
+      </p>
+    </section>
+    <div class="contact-layout">
+      <section class="contact-email" aria-labelledby="email-title">
+        <p class="mono">DIRECT TO THE SOCIETY</p>
+        <h2 id="email-title">Say hello.</h2>
+        <a class="contact-address" href="mailto:space@uonsu.com">
+          space@uonsu.com <span aria-hidden="true">↗</span>
+        </a>
+        <p>
+          Email us with your name and a little about your enquiry. For a project
+          or sponsorship enquiry, include the project or organisation you’re
+          getting in touch about.
+        </p>
+      </section>
+    </div>
+  </main>
+</SiteLayout>

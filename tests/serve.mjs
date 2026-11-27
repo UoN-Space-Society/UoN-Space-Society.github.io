@@ -15,15 +15,22 @@ const types = {
 };
 
 createServer(async (request, response) => {
-  const pathname = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
-  const file = resolve(root, `.${pathname.endsWith("/") ? `${pathname}index.html` : pathname}`);
+  const pathname = decodeURIComponent(
+    new URL(request.url, "http://localhost").pathname,
+  );
+  const file = resolve(
+    root,
+    `.${pathname.endsWith("/") ? `${pathname}index.html` : pathname}`,
+  );
   if (!file.startsWith(`${root}/`)) {
     response.writeHead(403).end();
     return;
   }
   try {
     const body = await readFile(file);
-    response.writeHead(200, { "Content-Type": types[extname(file)] ?? "application/octet-stream" });
+    response.writeHead(200, {
+      "Content-Type": types[extname(file)] ?? "application/octet-stream",
+    });
     response.end(body);
   } catch {
     response.writeHead(404).end("Not found");

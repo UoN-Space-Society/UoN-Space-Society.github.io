@@ -3,22 +3,27 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node build.mjs",
     "dev": "astro dev --host 127.0.0.1 --port 4173",
-    "prebuild": "node build.mjs",
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1 --port 4173",
-    "check": "node --check script.js && node --check build.mjs && astro check"
+    "check": "astro check",
+    "test": "npm run build && npm run test:build && npm run test:browser",
+    "test:build": "node --test tests/build.test.mjs",
+    "test:browser": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
     "@fontsource/space-mono": "^5.3.0",
-    "astro": "^7.4.13"
+    "astro": "^7.4.13",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@axe-core/playwright": "^4.14.1",
     "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.11",
     "cheerio": "^1.2.0",
     "prettier": "^3.10.1",
     "prettier-plugin-astro": "^1.1.2",

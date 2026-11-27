@@ -1,0 +1,61 @@
+.contact-page {
+  padding: 72px 4.5% 96px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.contact-heading {
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--line);
+}
+.contact-heading > .mono {
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+.contact-heading h1 {
+  font-size: clamp(64px, 8vw, 112px);
+}
+.contact-heading > p:last-child {
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 24px 0 0;
+}
+.contact-layout {
+  padding-top: 48px;
+}
+.contact-layout h2 {
+  font-size: 36px;
+  margin: 20px 0 24px;
+}
+.contact-layout p:not(.mono) {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 540px;
+}
+.contact-address {
+  display: inline-block;
+  font-size: clamp(24px, 3.2vw, 44px);
+  letter-spacing: -0.04em;
+  border-bottom: 1px solid var(--green);
+  overflow-wrap: anywhere;
+}
+.contact-address:hover {
+  color: var(--green);
+}
+@media (max-width: 650px) {
+  .contact-page {
+    padding: 40px 5% 64px;
+  }
+  .contact-heading {
+    padding-bottom: 32px;
+  }
+  .contact-heading > p:last-child {
+    font-size: 16px;
+  }
+  .contact-layout {
+    padding-top: 32px;
+  }
+  .contact-layout h2 {
+    font-size: 30px;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "title": "Project VIGIL",
+  "category": "SATELLITE COMPETITION BADGE",
+  "description": "A CubeSat optical communication payload that produces a laser and keeps it aimed at a target.",
+  "image": "../../assets/projects/vigil.png",
+  "imageAlt": "Satellite competition badge",
+  "badge": true,
+  "group": "upcoming",
+  "order": 2,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}

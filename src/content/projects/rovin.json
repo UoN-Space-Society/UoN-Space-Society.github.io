@@ -1,0 +1,12 @@
+{
+  "title": "They See Me Rovin’",
+  "category": "ROVER DESIGN / 2025–26",
+  "description": "A rover designed to traverse simulated Martian terrain and collect, transport and deposit geological samples.",
+  "image": "../../assets/projects/rover.png",
+  "imageAlt": "Rover concept rendering from the society annual report",
+  "badge": false,
+  "group": "recent",
+  "order": 3,
+  "url": "https://linktr.ee/spacesoc",
+  "linkLabel": "Find the project team"
+}
