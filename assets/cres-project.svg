@@ -1,1 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400"><g fill="none" stroke="#d5ee85" stroke-width="1"><circle cx="350" cy="200" r="145" opacity=".25"/><ellipse cx="350" cy="200" rx="230" ry="90" transform="rotate(-25 350 200)" opacity=".5"/><path d="M100 200h500M350 35v330" stroke-dasharray="3 9" opacity=".25"/></g><text x="350" y="220" text-anchor="middle" fill="#eeeae2" font-family="Arial,sans-serif" font-weight="700" font-size="86" letter-spacing="12">CRES</text><circle cx="551" cy="103" r="5" fill="#d5ee85"/></svg>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 700 400"
+>
+  <g
+    fill="none"
+    stroke="#d5ee85"
+    stroke-width="1"
+  >
+    <circle
+      cx="350"
+      cy="200"
+      r="145"
+      opacity=".25"
+    />
+    <ellipse
+      cx="350"
+      cy="200"
+      rx="230"
+      ry="90"
+      transform="rotate(-25 350 200)"
+      opacity=".5"
+    />
+    <path
+      d="M100 200h500M350 35v330"
+      stroke-dasharray="3 9"
+      opacity=".25"
+    />
+  </g>
+  <text
+    x="350"
+    y="220"
+    text-anchor="middle"
+    fill="#eeeae2"
+    font-family="Arial,sans-serif"
+    font-weight="700"
+    font-size="86"
+    letter-spacing="12"
+  >
+    CRES
+  </text>
+  <circle
+    cx="551"
+    cy="103"
+    r="5"
+    fill="#d5ee85"
+  />
+</svg>
