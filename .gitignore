@@ -1,4 +1,27 @@
+# Generated output and dependencies
 dist/
-.DS_Store
+node_modules/
+coverage/
+*.log
+
+# Local environment and credentials
 .env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local hosting, agent configuration, and private source notes
 .openai/
+.private/
+.vercel/
+
+# Machine-specific files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
