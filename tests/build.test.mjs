@@ -158,3 +158,18 @@ test('every page shares the current desktop/mobile menu and SU membership icon',
     assert.match(membership.find('.union-logo').attr('style'), /url\(/, file);
   }
 });
+
+test('secondary logo appears in footers and subpage headers only', () => {
+  for (const { file, $ } of pages) {
+    const home = relative(root, file) === 'index.html';
+    const headerLogo = $('header .brand img').attr('src');
+    const footerLogo = $('footer .footer-brand img').attr('src');
+    assert.match(footerLogo, /nottingham-space-society-secondary\./, file);
+    if (home) {
+      assert.match(headerLogo, /nottingham-space-society\./, file);
+      assert.doesNotMatch(headerLogo, /secondary/, file);
+    } else {
+      assert.match(headerLogo, /nottingham-space-society-secondary\./, file);
+    }
+  }
+});
