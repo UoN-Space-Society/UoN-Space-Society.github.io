@@ -12,7 +12,9 @@ Local environment files, hosting configuration and `.private/` notes are ignored
 
 ## Design
 
-An editorial field-notes identity: warm paper, forest green, acid lime, large typography and annotated lunar imagery. References reviewed from Awwwards: MECHA (restrained palette, technical illustration and typographic contrast) and Overworld Audio (exploration as an interaction model). These principles inform an original composition, rather than reproducing either design.
+The homepage opens with a full-viewport workshop photograph, transparent navigation, centered society name and a scroll cue inspired by https://imperialrocketry.com/. Its sticky hero fades as the next section covers it; reduced-motion preferences disable the fade. The workshop photograph was provided by the user. HELIA and CRES link to their existing project pages.
+
+The rest of the site uses an editorial field-notes identity: warm paper, forest green, acid lime, large typography and annotated lunar imagery. References reviewed from Awwwards: MECHA (restrained palette, technical illustration and typographic contrast) and Overworld Audio (exploration as an interaction model). These principles inform an original composition, rather than reproducing either design.
 
 ## Content and assets
 
