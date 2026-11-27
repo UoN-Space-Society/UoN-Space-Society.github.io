@@ -5,7 +5,6 @@ import OptimizedImage from '../components/OptimizedImage.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SponsorLogo from '../components/SponsorLogo.astro';
 import sponsors from '../data/sponsors.json';
-import VideoPlayer from '../components/VideoPlayer.astro';
 import heroPhoto from '../assets/ssc-space-team.jpg';
 import '../styles/home.css';
 const homepageSponsors = sponsors.filter(
@@ -107,34 +106,6 @@ const featuredProjects = ['helia', 'little-john'].map((id) =>
       >
         Explore all our projects <span aria-hidden="true">↗</span>
       </a>
-    </section>
-    <section
-      id="videos"
-      class="videos section"
-      aria-labelledby="videos-title"
-    >
-      <div class="section-label mono">03 / FROM THE TEST STAND</div>
-      <div class="section-heading">
-        <h2 id="videos-title">Videos</h2>
-        <p>
-          From an idea to ignition.
-          <br />
-          See our engineering in action.
-        </p>
-      </div>
-      <figure class="video-feature">
-        <VideoPlayer />
-        <figcaption>
-          <div>
-            <span class="mono">01 / ENGINE TEST</span>
-            <h3>Hybrid rocket engine</h3>
-            <p>
-              Footage from Nottingham Space Society’s hybrid rocket engine.
-              Lower your volume before playing.
-            </p>
-          </div>
-        </figcaption>
-      </figure>
     </section>
     <section
       id="contact"

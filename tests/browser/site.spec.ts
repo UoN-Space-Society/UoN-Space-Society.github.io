@@ -1,36 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test('video connects to YouTube only after a visitor chooses to play', async ({
-  page,
-}) => {
-  const youtubeRequests: string[] = [];
-  await page.route(/youtube(-nocookie)?\.com/, async (route) => {
-    youtubeRequests.push(route.request().url());
-    // Validate the embed contract without depending on YouTube's network or UI.
-    await route.fulfill({
-      contentType: 'text/html',
-      body: "<html lang='en'><title>Video</title><body>Video player</body></html>",
-    });
-  });
-  await page.goto('/');
-  await page
-    .getByRole('heading', { name: 'Videos', exact: true })
-    .scrollIntoViewIfNeeded();
-  await expect(page.locator('iframe')).toHaveCount(0);
-  expect(youtubeRequests).toEqual([]);
-  await page
-    .getByRole('button', { name: 'Play hybrid rocket engine video' })
-    .click();
-  await expect(
-    page.getByTitle('Nottingham Space Society — hybrid rocket engine footage'),
-  ).toHaveAttribute(
-    'src',
-    /^https:\/\/www\.youtube-nocookie\.com\/embed\/oqgHnKCRmLE\?autoplay=1$/,
-  );
-  await expect.poll(() => youtubeRequests.length).toBe(1);
-});
-
 // Public requirements, deliberately independent of components and CSS classes.
 const routes = [
   '/',
