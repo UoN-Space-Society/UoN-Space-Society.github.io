@@ -164,12 +164,12 @@ test('secondary logo appears in footers and subpage headers only', () => {
     const home = relative(root, file) === 'index.html';
     const headerLogo = $('header .brand img').attr('src');
     const footerLogo = $('footer .footer-brand img').attr('src');
-    assert.match(footerLogo, /nottingham-space-society-secondary\./, file);
+    assert.match(footerLogo, /nottingham-space-society-badge\./, file);
     if (home) {
       assert.match(headerLogo, /nottingham-space-society\./, file);
       assert.doesNotMatch(headerLogo, /secondary/, file);
     } else {
-      assert.match(headerLogo, /nottingham-space-society-secondary\./, file);
+      assert.match(headerLogo, /nottingham-space-society-badge\./, file);
     }
   }
 });
