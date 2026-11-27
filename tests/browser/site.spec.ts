@@ -108,8 +108,8 @@ test('mobile navigation supports Escape, focus restoration, and link selection',
   await expect(navigation).toBeHidden();
   await expect(toggle).toBeFocused();
   await toggle.click();
-  await navigation.getByRole('link', { name: 'The society' }).click();
-  await expect(page).toHaveURL(/#about$/);
+  await navigation.getByRole('link', { name: 'Sponsors' }).click();
+  await expect(page).toHaveURL(/sponsors\.html$/);
   await expect(navigation).toBeHidden();
 });
 
@@ -214,7 +214,7 @@ test('covered hero links leave the keyboard order and return when scrolling back
 }) => {
   await page.goto('/');
   const discover = page.getByRole('link', {
-    name: 'Discover Nottingham Space Society',
+    name: 'Discover our previous sponsors',
   });
   await expect(discover).toBeVisible();
   await page.evaluate(() =>

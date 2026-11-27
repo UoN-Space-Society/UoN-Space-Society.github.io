@@ -1,5 +1,4 @@
 export const navigationLinks = [
-  { label: 'The society', href: '/index.html#about' },
   { label: 'Our projects', href: '/projects.html' },
   { label: 'Videos', href: '/index.html#videos' },
   { label: 'Sponsors', href: '/sponsors.html' },
