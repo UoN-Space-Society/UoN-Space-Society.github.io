@@ -41,3 +41,37 @@ test('Astro pages load Analytics only after consent and preserve the choice acro
   );
   expect(tagRequests).toHaveLength(2);
 });
+
+test('settings stay in the footer and accepting does not scroll the page', async ({
+  page,
+}) => {
+  await page.route('https://www.googletagmanager.com/gtag/js**', (route) =>
+    route.fulfill({ contentType: 'application/javascript', body: '' }),
+  );
+  await page.goto('/');
+  const settings = page.getByRole('button', {
+    name: 'Analytics settings',
+    exact: true,
+  });
+  await expect(
+    page
+      .locator('footer')
+      .getByRole('button', { name: 'Analytics settings', exact: true }),
+  ).toHaveCount(1);
+  await expect(settings).toHaveCSS('position', 'static');
+  const notice = page.getByRole('region', { name: 'Analytics cookies' });
+  const bounds = await notice.boundingBox();
+  expect(bounds?.height).toBeLessThan(230);
+  await page.screenshot({
+    path: `.private/analytics-notice-${test.info().project.name}.png`,
+  });
+  await page
+    .getByRole('button', { name: 'Accept analytics', exact: true })
+    .click();
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  await expect(notice).toBeHidden();
+  await settings.scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: `.private/analytics-footer-${test.info().project.name}.png`,
+  });
+});

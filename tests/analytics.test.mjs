@@ -45,6 +45,7 @@ function browser({ id = 'G-TEST123', saved = null, blocked = false } = {}) {
     referrer: 'https://example.org/start?email=private#secret',
     head: { append: (tag) => tags.push(tag) },
     body: { append: (...nodes) => elements.push(...nodes) },
+    querySelector: () => ({ append: (...nodes) => elements.push(...nodes) }),
     createElement: (name) =>
       name === 'section' ? panel : name === 'button' ? settings : element(),
     addEventListener: (name, handler) => {
