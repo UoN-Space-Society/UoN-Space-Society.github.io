@@ -8,6 +8,8 @@ for (const file of [
   'projects.html',
   'style.css',
   'script.js',
+  'analytics.js',
+  'analytics-config.js',
 ])
   await copyFile(file, `dist/${file}`);
 await cp('projects', 'dist/projects', { recursive: true });

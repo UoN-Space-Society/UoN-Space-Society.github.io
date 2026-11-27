@@ -1852,3 +1852,51 @@ header nav a[aria-current='page'] {
     transition-delay: 0s !important;
   }
 }
+
+.analytics-consent {
+  position: fixed;
+  bottom: 3.5rem;
+  right: 1rem;
+  left: 1rem;
+  margin-left: auto;
+  max-width: 40rem;
+  padding: 1.25rem;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  z-index: 10000;
+  box-shadow: 0 4px 24px #0003;
+}
+.analytics-consent[hidden] {
+  display: none;
+}
+.analytics-consent p {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.analytics-consent div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.analytics-consent button,
+.analytics-settings {
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.analytics-settings {
+  position: fixed;
+  right: 1rem;
+  bottom: 0.5rem;
+  z-index: 9999;
+  font-size: 0.8rem;
+}
+.analytics-consent button:focus-visible,
+.analytics-settings:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
