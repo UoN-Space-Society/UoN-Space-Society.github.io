@@ -15,7 +15,7 @@
 }
 .brand img {
   display: block;
-  width: 180px;
+  width: 120px;
   height: 120px;
   object-fit: contain;
 }
@@ -112,9 +112,8 @@
   background: linear-gradient(#07132170, transparent);
 }
 .landing-header .brand img {
-  width: 174px;
+  width: 116px;
   height: 116px;
-  filter: brightness(0) invert(1);
 }
 .landing-header .desktop-nav {
   font-size: 14px;
@@ -162,7 +161,7 @@
     gap: 8px;
   }
   .brand img {
-    width: 110px;
+    width: 100px;
     height: 100px;
   }
   .landing-header {
@@ -170,7 +169,7 @@
     padding: 0 5%;
   }
   .landing-header .brand img {
-    width: 110px;
+    width: 92px;
     height: 92px;
   }
   .social-links {
