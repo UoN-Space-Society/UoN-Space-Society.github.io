@@ -2,6 +2,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+// Midnight on 18 September 2026 in Europe/London.
+const FEED_START = '2026-09-17T23:00:00.000Z';
 const FIELDS =
   'id,caption,permalink,timestamp,media_type,media_url,thumbnail_url';
 export function expiry(timestamp) {
@@ -111,7 +113,7 @@ export async function run(
       let older = false;
       for (const post of result.data) {
         const row = record(post, now);
-        if (new Date(row.expires_at) <= now) {
+        if (row.timestamp < FEED_START || new Date(row.expires_at) <= now) {
           older = true;
           continue;
         }
@@ -146,6 +148,7 @@ export async function run(
     const url = new URL(rest);
     url.searchParams.set('select', FIELDS);
     url.searchParams.set('expires_at', `gt.${now.toISOString()}`);
+    url.searchParams.set('timestamp', `gte.${FEED_START}`);
     url.searchParams.set('order', 'timestamp.desc,id.desc');
     url.searchParams.set('limit', '500');
     url.searchParams.set('offset', String(offset));

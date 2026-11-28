@@ -130,3 +130,5 @@ empty feed. Run the workflow manually for recovery after fixing access issues.
 - [Storage deletion](https://supabase.com/docs/guides/storage/management/delete-objects)
 - [Backups](https://supabase.com/docs/guides/platform/backups)
 - [GitHub scheduled workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
+
+The Activities feed starts on 18 September 2026 (Europe/London), inclusive.
