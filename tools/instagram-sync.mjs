@@ -8,7 +8,10 @@ export function expiry(timestamp) {
   const date = new Date(timestamp);
   if (!Number.isFinite(date.getTime()))
     throw new Error('Invalid Instagram timestamp');
+  const month = date.getUTCMonth();
   date.setUTCFullYear(date.getUTCFullYear() + 1);
+  // Match Postgres calendar-year arithmetic: Feb 29 expires on Feb 28.
+  if (date.getUTCMonth() !== month) date.setUTCDate(0);
   return date.toISOString();
 }
 export function record(post, now = new Date()) {
@@ -78,7 +81,7 @@ export async function run(
   }
   const headers = {
     apikey: key,
-    Authorization: `Bearer ${key}`,
+    ...(key.startsWith('sb_secret_') ? {} : { Authorization: `Bearer ${key}` }),
     'Content-Type': 'application/json',
   };
   const rest = new URL('/rest/v1/instagram_posts', base);
