@@ -23,11 +23,14 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Import authorised society posts and export snapshot
+      - name: Import society posts and export snapshot
         run: node tools/instagram-sync.mjs
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          INSTAGRAM_SOURCE: ${{ vars.INSTAGRAM_SOURCE }}
+          APIFY_RESULTS_LIMIT: ${{ vars.APIFY_RESULTS_LIMIT }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_API_VERSION: ${{ vars.INSTAGRAM_API_VERSION }}

@@ -28,6 +28,19 @@ URLs, media type and sync/expiry timestamps. Actual photos, videos, comments,
 access tokens and database credentials are not archived in this table. Instagram
 media URLs are external references and are not a guarantee of permanent access.
 
+## Choose a source
+
+For the public `@uonspacesoc` profile, set the Actions variable
+`INSTAGRAM_SOURCE` to `apify` and add `APIFY_TOKEN` as an Actions secret.
+This uses [Apify Instagram Post Scraper](https://apify.com/apify/instagram-post-scraper)
+and needs an Apify account. No Instagram administrator access or AI service is
+required for this route. The default limit is 50 results per run. Use
+`APIFY_RESULTS_LIMIT` to change it if you need a larger initial backfill.
+Check the oldest returned post against the date cutoff during the first run.
+Check the Actor's reported usage before enabling daily runs.
+
+The official API remains available when the society can authorise the account.
+
 ## Authorise Instagram
 
 An account administrator must connect the society's Business/Creator Instagram
@@ -44,7 +57,9 @@ account should remain with the society for committee handover.
 
 ## Configure GitHub Actions
 
-Set these repository Actions secrets (never commit their values):
+Both sources need the Supabase URL and server key. The official API also needs the
+Instagram token, user ID and API version. Save the credentials below as repository
+Actions secrets.
 
 | Secret                   | Value                                                                  |
 | ------------------------ | ---------------------------------------------------------------------- |
@@ -53,9 +68,9 @@ Set these repository Actions secrets (never commit their values):
 | `INSTAGRAM_ACCESS_TOKEN` | Authorised account's valid long-lived API token                        |
 | `INSTAGRAM_USER_ID`      | Account ID returned by the selected Instagram API                      |
 
-Set repository Actions variables `INSTAGRAM_API_VERSION` to the supported version
-(e.g. the version selected in your Meta dashboard), and `INSTAGRAM_FEED_ENABLED`
-to `true` only after the database and secrets are configured. Until then the daily
+For the official API, set the Actions variable `INSTAGRAM_API_VERSION` to the supported version
+(e.g. the version selected in your Meta dashboard). For either source, set
+`INSTAGRAM_FEED_ENABLED` to `true` only after the database and secrets are configured. Until then the daily
 job is disabled.
 
 Supabase secret/service-role credentials are privileged and bypass RLS. They are
