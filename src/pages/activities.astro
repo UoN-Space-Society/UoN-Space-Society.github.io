@@ -1,13 +1,9 @@
 ---
+import InstagramPostCard from '../components/InstagramPostCard.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import { loadInstagramSnapshot } from '../data/instagram';
+import { formatInstagramDate, loadInstagramSnapshot } from '../data/instagram';
 
 const { posts, fetched_at } = await loadInstagramSnapshot();
-const formatDate = (value: string) =>
-  new Intl.DateTimeFormat('en-GB', {
-    dateStyle: 'medium',
-    timeZone: 'Europe/London',
-  }).format(new Date(value));
 ---
 
 <SiteLayout
@@ -42,54 +38,11 @@ const formatDate = (value: string) =>
         class="posts-grid"
         aria-label="Recent Instagram posts"
       >
-        {posts.map((post) => {
-          const image =
-            post.media_type === 'VIDEO'
-              ? post.thumbnail_url
-              : post.media_url || post.thumbnail_url;
-          return (
-            <li>
-              <article class="post-card">
-                {image && (
-                  <a
-                    class="post-image"
-                    href={post.permalink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View Instagram post from ${formatDate(post.timestamp)} (opens in a new tab)`}
-                  >
-                    <img
-                      src={image}
-                      alt=""
-                      width="480"
-                      height="480"
-                      loading="lazy"
-                      decoding="async"
-                      referrerpolicy="no-referrer"
-                    />
-                  </a>
-                )}
-                <div class="post-content">
-                  <time
-                    class="mono"
-                    datetime={post.timestamp}
-                  >
-                    {formatDate(post.timestamp)}
-                  </time>
-                  <a
-                    href={post.permalink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View Instagram post from ${formatDate(post.timestamp)} (opens in a new tab)`}
-                  >
-                    View on Instagram
-                  </a>
-                  {post.caption && <p class="post-caption">{post.caption}</p>}
-                </div>
-              </article>
-            </li>
-          );
-        })}
+        {posts.map((post) => (
+          <li>
+            <InstagramPostCard post={post} />
+          </li>
+        ))}
       </ul>
     ) : (
       <div class="posts-empty">
@@ -106,7 +59,8 @@ const formatDate = (value: string) =>
     )}
     {fetched_at && (
       <p class="sync-date mono">
-        Last updated <time datetime={fetched_at}>{formatDate(fetched_at)}</time>
+        Last updated{' '}
+        <time datetime={fetched_at}>{formatInstagramDate(fetched_at)}</time>
       </p>
     )}
   </main>
@@ -140,43 +94,12 @@ const formatDate = (value: string) =>
     padding: 0;
     margin: 0;
     display: grid;
+    align-items: start;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 20px;
   }
   .posts-grid li {
     min-width: 0;
-  }
-  .post-card {
-    border: 1px solid var(--line);
-    height: 100%;
-  }
-  .post-image {
-    display: block;
-  }
-  .post-card img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    object-fit: cover;
-  }
-  .post-content {
-    padding: 18px;
-  }
-  .post-content time {
-    display: block;
-    color: var(--muted);
-  }
-  .post-caption {
-    white-space: pre-line;
-    overflow-wrap: anywhere;
-    line-height: 1.6;
-    font-size: 14px;
-  }
-  .post-content a {
-    display: inline-block;
-    margin-top: 6px;
-    font-size: 13px;
   }
   .posts-empty {
     padding: 32px;
@@ -211,9 +134,6 @@ const formatDate = (value: string) =>
     .posts-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-    }
-    .post-content {
-      padding: 12px;
     }
   }
   @media (max-width: 420px) {
