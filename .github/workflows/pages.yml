@@ -33,6 +33,7 @@ jobs:
         run: node tools/instagram-sync.mjs --export-only
       - run: npm run build
       - run: npm run test:analytics
+      - run: npm run test:instagram
       - run: npm run test:build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
