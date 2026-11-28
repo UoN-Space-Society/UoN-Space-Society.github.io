@@ -99,7 +99,7 @@ test('Activities puts a compact preview and native caption disclosure on long po
     'Long captions must start behind a native disclosure',
   );
   assert.equal(disclosure.attr('open'), undefined);
-  assert.equal(disclosure.find('summary').text().trim(), 'Read full caption');
+  assert.equal(disclosure.find('summary').length, 1);
 
   const closed = card.clone();
   closed.find('details').remove();
@@ -204,15 +204,23 @@ test(
       const summary = cards.first().locator('summary');
       const fullCaption = cards.first().locator('details p');
       assert.equal(await fullCaption.isVisible(), false);
+      assert.equal(await summary.innerText(), 'More');
       await summary.focus();
       await page.keyboard.press('Enter');
       assert.equal(await fullCaption.isVisible(), true);
+      assert.equal(await summary.innerText(), 'Less');
+      const captionBounds = await fullCaption.boundingBox();
+      assert.ok(
+        (await summary.boundingBox()).y >=
+          captionBounds.y + captionBounds.height,
+      );
       assert.equal(
         await summary.evaluate((node) => node === document.activeElement),
         true,
       );
-      await page.keyboard.press('Enter');
+      await page.keyboard.press('Space');
       assert.equal(await fullCaption.isVisible(), false);
+      assert.equal(await summary.innerText(), 'More');
 
       await page.setViewportSize({ width: 390, height: 844 });
       assert.equal(

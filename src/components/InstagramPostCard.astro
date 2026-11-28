@@ -66,7 +66,10 @@ const preview =
         <>
           <p class="post-caption-preview">{preview}</p>
           <details>
-            <summary>Read full caption</summary>
+            <summary>
+              <span class="caption-more">More</span>
+              <span class="caption-less">Less</span>
+            </summary>
             <p class="post-caption">{caption}</p>
           </details>
         </>
@@ -129,6 +132,17 @@ const preview =
     display: block;
     cursor: pointer;
     width: fit-content;
+  }
+  details[open] {
+    display: flex;
+    flex-direction: column;
+  }
+  details[open] > summary {
+    order: 1;
+  }
+  details:not([open]) .caption-less,
+  details[open] .caption-more {
+    display: none;
   }
   summary::-webkit-details-marker {
     display: none;
