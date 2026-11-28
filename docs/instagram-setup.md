@@ -5,6 +5,14 @@ Supabase table and renders a public static snapshot with Astro. Creating these
 files does not create a hosted project, connect Instagram, or enable the schedule.
 Real posts require account authorisation and configured secrets.
 
+## Current hosted project
+
+Project `nottingham-space-society` has been created on Supabase Free in Ireland.
+Project reference: `nolypimujiwyufzjxkol`.
+The `public.instagram_posts` schema has been applied and RLS verified enabled.
+The database is not yet connected to GitHub Actions or an authorised Instagram
+account. No live posts have been imported. The branch is not deployed.
+
 ## Create the database
 
 1. Create a Supabase Free project in the society's organisation/account. Record
