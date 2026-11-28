@@ -9,8 +9,9 @@ import {
   symlinkSync,
   writeFileSync,
 } from 'node:fs';
+import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { after, before, test } from 'node:test';
 import { load } from 'cheerio';
@@ -35,7 +36,11 @@ const makePost = (id, date, caption, media) => ({
 });
 const latest = makePost('latest', '2026-09-18T23:30:00Z', longCaption, true);
 const earlier = makePost('earlier', '2026-09-18T10:00:00Z', shortCaption);
-const oldest = makePost('oldest', '2026-09-18T02:00:00Z', '');
+const noCaption = makePost('oldest', '2026-09-18T02:00:00Z', '');
+const additionalPosts = [17, 16, 15].map((day) =>
+  makePost(`post-${day}`, `2026-09-${day}T12:00:00Z`, shortCaption),
+);
+const orderedPosts = [latest, earlier, noCaption, ...additionalPosts];
 let scratch;
 let populated;
 let empty;
@@ -74,7 +79,7 @@ before(() => {
   writeFileSync(
     join(scratch, '.cache/instagram-posts.json'),
     JSON.stringify({
-      posts: [earlier, oldest, latest, latest],
+      posts: [earlier, noCaption, ...additionalPosts, latest, latest],
       fetched_at: '2026-09-20T09:00:00Z',
     }),
   );
@@ -105,13 +110,17 @@ test('Activities puts a compact preview and native caption disclosure on long po
 
 test('Activities preserves original links, London dates, and newest-first order', () => {
   const cards = populated('main article');
-  assert.equal(cards.length, 3, 'Duplicate IDs produce only one card');
+  assert.equal(
+    cards.length,
+    orderedPosts.length,
+    'Duplicate IDs produce only one card',
+  );
   assert.deepEqual(
     cards
       .find('time')
       .map((_, time) => populated(time).attr('datetime'))
       .get(),
-    [latest.timestamp, earlier.timestamp, oldest.timestamp],
+    orderedPosts.map((post) => post.timestamp),
   );
   const featured = cards.first();
   assert.equal(featured.find('time').text().trim(), '19 Sept 2026');
@@ -137,3 +146,88 @@ test('Activities has an honest profile link when no snapshot is available', () =
   assert.equal(empty('main a').last().attr('href'), `${base}/uonspacesoc/`);
   assert.match(empty('main').text(), /latest society activities/);
 });
+
+test(
+  'Activities stays compact and expands captions by keyboard without JavaScript',
+  {
+    skip: process.env.ACTIVITIES_BROWSER_TEST !== '1',
+  },
+  async () => {
+    const { chromium } = await import('@playwright/test');
+    const dist = join(scratch, 'dist');
+    const server = createServer((request, response) => {
+      const path = new URL(request.url, 'http://localhost').pathname;
+      const type =
+        path === '/activities.html'
+          ? 'text/html; charset=utf-8'
+          : path.startsWith('/_astro/') && extname(path) === '.css'
+            ? 'text/css'
+            : null;
+      if (!type) return response.writeHead(404).end();
+      response.writeHead(200, { 'Content-Type': type });
+      response.end(readFileSync(join(dist, path)));
+    });
+    await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+    let browser;
+    try {
+      browser = await chromium.launch();
+      const origin = `http://127.0.0.1:${server.address().port}`;
+      const page = await browser.newPage({
+        javaScriptEnabled: false,
+        viewport: { width: 1440, height: 900 },
+      });
+      await page.route('**/*', (route) =>
+        route.request().url().startsWith(origin)
+          ? route.continue()
+          : route.abort(),
+      );
+      await page.goto(`${origin}/activities.html`);
+      const cards = page.locator('main article');
+      const bounds = await cards.evaluateAll((items) =>
+        items.map((card) => {
+          const { top, bottom } = card.getBoundingClientRect();
+          return { top, bottom };
+        }),
+      );
+      assert.equal(bounds.length, 6);
+      assert.ok(bounds.slice(0, 5).every(({ top }) => top === bounds[0].top));
+      assert.ok(bounds[5].top > bounds[0].bottom);
+      assert.ok(
+        bounds[0].bottom - bounds[0].top < 500,
+        'The closed caption keeps its card compact',
+      );
+      assert.ok(
+        bounds[1].bottom < bounds[0].bottom,
+        'Shorter cards do not stretch',
+      );
+
+      const summary = cards.first().locator('summary');
+      const fullCaption = cards.first().locator('details p');
+      assert.equal(await fullCaption.isVisible(), false);
+      await summary.focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await fullCaption.isVisible(), true);
+      assert.equal(
+        await summary.evaluate((node) => node === document.activeElement),
+        true,
+      );
+      await page.keyboard.press('Enter');
+      assert.equal(await fullCaption.isVisible(), false);
+
+      await page.setViewportSize({ width: 390, height: 844 });
+      assert.equal(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+        true,
+      );
+      assert.ok(
+        (await cards.nth(1).boundingBox()).y >
+          (await cards.first().boundingBox()).y,
+      );
+    } finally {
+      await browser?.close();
+      await new Promise((resolve) => server.close(resolve));
+    }
+  },
+);
