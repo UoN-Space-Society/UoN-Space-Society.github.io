@@ -2,13 +2,10 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { z } from 'zod';
 
-const httpsUrl = z
-  .string()
-  .url()
-  .refine((value) => {
-    const url = new URL(value);
-    return url.protocol === 'https:' && !url.username && !url.password;
-  });
+const httpsUrl = z.url().refine((value) => {
+  const url = new URL(value);
+  return url.protocol === 'https:' && !url.username && !url.password;
+});
 const postSchema = z.object({
   id: z.string().min(1),
   caption: z.string().default(''),
@@ -19,14 +16,14 @@ const postSchema = z.object({
       /^\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?$/.test(url.pathname)
     );
   }),
-  timestamp: z.string().datetime({ offset: true }),
+  timestamp: z.iso.datetime({ offset: true }),
   media_type: z.string(),
   media_url: httpsUrl.optional().nullable(),
   thumbnail_url: httpsUrl.optional().nullable(),
 });
 const snapshotSchema = z.object({
   posts: z.array(postSchema),
-  fetched_at: z.string().datetime({ offset: true }).optional(),
+  fetched_at: z.iso.datetime({ offset: true }).optional(),
 });
 
 // This module runs during the Astro build, never in a visitor's browser.

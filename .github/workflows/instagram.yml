@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   sync-and-build:
+    if: vars.INSTAGRAM_FEED_ENABLED == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

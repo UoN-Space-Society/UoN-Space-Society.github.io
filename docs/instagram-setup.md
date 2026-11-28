@@ -44,7 +44,11 @@ Set these repository Actions secrets (never commit their values):
 | `SUPABASE_SECRET_KEY`    | Server-side Supabase secret key, or compatible legacy service-role key |
 | `INSTAGRAM_ACCESS_TOKEN` | Authorised account's valid long-lived API token                        |
 | `INSTAGRAM_USER_ID`      | Account ID returned by the selected Instagram API                      |
-| `INSTAGRAM_API_VERSION`  | Explicit supported Graph API version, including the `v` prefix         |
+
+Set repository Actions variables `INSTAGRAM_API_VERSION` to the supported version
+(e.g. the version selected in your Meta dashboard), and `INSTAGRAM_FEED_ENABLED`
+to `true` only after the database and secrets are configured. Until then the daily
+job is disabled.
 
 Supabase secret/service-role credentials are privileged and bypass RLS. They are
 for server-side jobs only; do not prefix them with `PUBLIC_` or put them in

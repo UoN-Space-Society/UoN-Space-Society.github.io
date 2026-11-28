@@ -25,6 +25,12 @@ jobs:
       - run: npm ci
       - run: npm run format:check
       - run: npm run check
+      - name: Load published Instagram feed
+        if: github.event_name != 'pull_request' && vars.INSTAGRAM_FEED_ENABLED == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: node tools/instagram-sync.mjs --export-only
       - run: npm run build
       - run: npm run test:analytics
       - run: npm run test:build
