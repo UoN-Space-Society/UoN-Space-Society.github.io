@@ -21,6 +21,12 @@ retained posts. The `activities` branch is for review. Production deployment
 and the daily schedule require the workflow on `main` and the enablement
 variable below.
 
+The [live Activities browser check](https://github.com/UoN-Space-Society/UoN-Space-Society.github.io/actions/runs/46135893476)
+built the site from Supabase and verified all nine cards, original links and
+media previews in desktop and mobile Chromium. The posts ranged from
+18 September to 20 November 2026. At 1440px the first row had five cards, and
+at Pixel 7 width the cards stacked in one column.
+
 ## Create the database
 
 1. Create a Supabase Free project in the society's organisation/account. Record
