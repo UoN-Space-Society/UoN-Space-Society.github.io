@@ -21,6 +21,17 @@ const postSchema = z.object({
   media_url: httpsUrl.optional().nullable(),
   thumbnail_url: httpsUrl.optional().nullable(),
 });
+export type InstagramPost = z.output<typeof postSchema>;
+
+const londonDate = new Intl.DateTimeFormat('en-GB', {
+  dateStyle: 'medium',
+  timeZone: 'Europe/London',
+});
+
+export function formatInstagramDate(timestamp: string) {
+  return londonDate.format(new Date(timestamp));
+}
+
 const snapshotSchema = z.object({
   posts: z.array(postSchema),
   fetched_at: z.iso.datetime({ offset: true }).optional(),

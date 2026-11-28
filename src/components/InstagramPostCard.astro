@@ -1,0 +1,141 @@
+---
+import { formatInstagramDate, type InstagramPost } from '../data/instagram';
+
+interface Props {
+  post: InstagramPost;
+}
+
+const { post } = Astro.props;
+const date = formatInstagramDate(post.timestamp);
+const linkLabel = `View Instagram post from ${date} (opens in a new tab)`;
+const image =
+  post.media_type === 'VIDEO'
+    ? post.thumbnail_url
+    : post.media_url || post.thumbnail_url;
+const caption = post.caption.trim();
+const compact = caption.replace(/\s+/gu, ' ');
+const previewLimit = 120;
+const needsDisclosure = compact.length > previewLimit || caption !== compact;
+// Bound the work to the preview prefix, allowing two UTF-16 units per code point.
+const previewCharacters = Array.from(compact.slice(0, (previewLimit + 1) * 2));
+const previewHead = previewCharacters.slice(0, previewLimit + 1).join('');
+const wordBoundary = previewHead.lastIndexOf(' ');
+const preview =
+  previewCharacters.length > previewLimit
+    ? `${wordBoundary > 0 ? previewHead.slice(0, wordBoundary) : previewCharacters.slice(0, previewLimit).join('')}…`
+    : compact;
+---
+
+<article class="post-card">
+  {image && (
+    <a
+      class="post-image"
+      href={post.permalink}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={linkLabel}
+    >
+      <img
+        src={image}
+        alt=""
+        width="480"
+        height="480"
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+      />
+    </a>
+  )}
+  <div class="post-content">
+    <time
+      class="mono"
+      datetime={post.timestamp}
+    >
+      {date}
+    </time>
+    <a
+      href={post.permalink}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={linkLabel}
+    >
+      View on Instagram
+    </a>
+    {caption &&
+      (needsDisclosure ? (
+        <>
+          <p class="post-caption-preview">{preview}</p>
+          <details>
+            <summary>Read full caption</summary>
+            <p class="post-caption">{caption}</p>
+          </details>
+        </>
+      ) : (
+        <p class="post-caption">{caption}</p>
+      ))}
+  </div>
+</article>
+
+<style>
+  .post-card {
+    border: 1px solid var(--line);
+  }
+  .post-image {
+    display: block;
+  }
+  .post-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .post-content {
+    padding: 18px;
+  }
+  .post-content time {
+    display: block;
+    color: var(--muted);
+  }
+  .post-caption,
+  .post-caption-preview {
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+  .post-caption {
+    white-space: pre-line;
+  }
+  .post-caption-preview {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .post-content:has(details[open]) .post-caption-preview {
+    display: none;
+  }
+  .post-content a,
+  summary {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-size: 13px;
+  }
+  .post-content a {
+    display: inline-block;
+    margin-top: 6px;
+  }
+  summary {
+    display: block;
+    cursor: pointer;
+    width: fit-content;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  @media (max-width: 700px) {
+    .post-content {
+      padding: 12px;
+    }
+  }
+</style>
