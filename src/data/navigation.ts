@@ -1,6 +1,7 @@
 export const navigationLinks = [
   { label: 'About', href: '/about.html' },
   { label: 'Our projects', href: '/projects.html' },
+  { label: 'Activities', href: '/activities.html' },
   { label: 'Sponsors', href: '/sponsors.html' },
   { label: 'Contact Us', href: '/contact.html' },
 ] as const;
