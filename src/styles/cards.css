@@ -52,14 +52,6 @@
   margin: 0;
   color: var(--muted);
 }
-.project-card-arrow {
-  font-size: 30px;
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-.featured-project:hover .project-card-arrow {
-  transform: translate(3px, -3px);
-}
 .project-photo {
   aspect-ratio: 3/2;
   overflow: hidden;

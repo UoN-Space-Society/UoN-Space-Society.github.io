@@ -11,3 +11,6 @@ playwright-report/
 .env.*
 package-lock.json
 public/
+
+# Temporary Instagram build snapshots (never commit post archives)
+.cache/

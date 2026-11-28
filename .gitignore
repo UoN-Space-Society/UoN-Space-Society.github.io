@@ -35,3 +35,6 @@ reader.json
 # Browser test artifacts
 test-results/
 playwright-report/
+
+# Temporary Instagram build snapshots (never commit post archives)
+.cache/
