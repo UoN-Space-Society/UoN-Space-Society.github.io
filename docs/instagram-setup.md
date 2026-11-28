@@ -1,17 +1,25 @@
 # Instagram Activities feed
 
-This integration imports the authorised `@uonspacesoc` account into a private
-Supabase table and renders a public static snapshot with Astro. Creating these
-files does not create a hosted project, connect Instagram, or enable the schedule.
-Real posts require account authorisation and configured secrets.
+The Activities page shows recent public posts from `@uonspacesoc`, newest first.
+The feed includes posts published on or after 18 September 2026 (Europe/London).
 
-## Current hosted project
+`tools/instagram-sync.mjs` reads posts from Apify or the official Instagram API,
+upserts retained metadata into the private Supabase table, and exports an ignored
+`.cache/instagram-posts.json` snapshot. Astro reads that snapshot at build time
+to render `/activities.html`. The desktop grid shows five posts per row, with
+fewer columns on smaller screens. Each card links to the original post.
 
-Project `nottingham-space-society` has been created on Supabase Free in Ireland.
-Project reference: `nolypimujiwyufzjxkol`.
-The `public.instagram_posts` schema has been applied and RLS verified enabled.
-The database is not yet connected to GitHub Actions or an authorised Instagram
-account. No live posts have been imported. The branch is not deployed.
+## Hosted project and verification
+
+Project `nottingham-space-society` on Supabase Free (Ireland) has the
+`public.instagram_posts` table with row-level security enabled. Project
+reference: `nolypimujiwyufzjxkol`.
+
+The [live import check](https://github.com/UoN-Space-Society/UoN-Space-Society.github.io/actions/runs/46135672069)
+verified the repository credentials for Apify and Supabase and read back nine
+retained posts. The `activities` branch is for review. Production deployment
+and the daily schedule require the workflow on `main` and the enablement
+variable below.
 
 ## Create the database
 
@@ -36,12 +44,14 @@ This uses [Apify Instagram Post Scraper](https://apify.com/apify/instagram-post-
 and needs an Apify account. No Instagram administrator access or AI service is
 required for this route. The default limit is 50 results per run. Use
 `APIFY_RESULTS_LIMIT` to change it if you need a larger initial backfill.
-Check the oldest returned post against the date cutoff during the first run.
-Check the Actor's reported usage before enabling daily runs.
+The accepted range is 1–100 results per run. Check the oldest returned post
+against the date cutoff if you need to confirm backfill coverage.
+Each importer request caps the Actor charge at USD 0.20. Check reported usage
+before enabling daily runs.
 
 The official API remains available when the society can authorise the account.
 
-## Authorise Instagram
+## Optional official Instagram API
 
 An account administrator must connect the society's Business/Creator Instagram
 account to a Meta developer app and grant the read access needed for its own
@@ -57,39 +67,47 @@ account should remain with the society for committee handover.
 
 ## Configure GitHub Actions
 
-Both sources need the Supabase URL and server key. The official API also needs the
-Instagram token, user ID and API version. Save the credentials below as repository
-Actions secrets.
+Set these repository Actions secrets and variables:
 
-| Secret                   | Value                                                                  |
-| ------------------------ | ---------------------------------------------------------------------- |
-| `SUPABASE_URL`           | Supabase project URL, such as `https://PROJECT.supabase.co`            |
-| `SUPABASE_SECRET_KEY`    | Server-side Supabase secret key, or compatible legacy service-role key |
-| `INSTAGRAM_ACCESS_TOKEN` | Authorised account's valid long-lived API token                        |
-| `INSTAGRAM_USER_ID`      | Account ID returned by the selected Instagram API                      |
+| Setting                  | Kind     | Provider | Value                                                                    |
+| ------------------------ | -------- | -------- | ------------------------------------------------------------------------ |
+| `SUPABASE_URL`           | Secret   | Both     | Supabase project URL                                                     |
+| `SUPABASE_SECRET_KEY`    | Secret   | Both     | Server-side Supabase secret key or compatible legacy service-role key    |
+| `APIFY_TOKEN`            | Secret   | Apify    | Token with access to run the Instagram Post Scraper and read its results |
+| `INSTAGRAM_ACCESS_TOKEN` | Secret   | Meta     | Authorised account's valid long-lived API token                          |
+| `INSTAGRAM_USER_ID`      | Secret   | Meta     | Account ID returned by the Instagram API                                 |
+| `INSTAGRAM_SOURCE`       | Variable | Both     | `apify` for the tested public feed, or `meta` for the official API       |
+| `APIFY_RESULTS_LIMIT`    | Variable | Apify    | Optional, defaults to 50                                                 |
+| `INSTAGRAM_API_VERSION`  | Variable | Meta     | Supported Graph API version including the `v` prefix                     |
+| `INSTAGRAM_FEED_ENABLED` | Variable | Both     | Set to `true` when ready to activate                                     |
 
-For the official API, set the Actions variable `INSTAGRAM_API_VERSION` to the supported version
-(e.g. the version selected in your Meta dashboard). For either source, set
-`INSTAGRAM_FEED_ENABLED` to `true` only after the database and secrets are configured. Until then the daily
-job is disabled.
+Keep the Supabase key server-side because it bypasses RLS. Keep generated
+snapshots and credentials out of Git. The site only receives the generated
+public content.
 
-Supabase secret/service-role credentials are privileged and bypass RLS. They are
-for server-side jobs only; do not prefix them with `PUBLIC_` or put them in
-browser code. The public site receives only generated public post content.
+The sync workflow is scheduled daily at 06:23 UTC and deploys only from
+`main`. Once activated, the regular Pages workflow also exports the current
+feed before building so unrelated site changes preserve the feed. Both
+workflows use standard GitHub-hosted runners.
 
-The daily workflow must be present on the repository's default branch to run on
-a schedule. Branch/manual testing must not deploy to production. Review the
-workflow, configure the secrets and test an actual import before merging. GitHub
-Pages environment approvals or branch protection may need deliberate setup for
-unattended deployment; do not bypass them silently.
+## Preview and troubleshoot
 
-The integration is intended for standard GitHub-hosted Ubuntu runners in this
-public repository, not paid larger runners. Keep generated snapshots out of Git
-history, keep artifact retention short and deploy only successful builds. A
-single workflow can import and deploy without needing to push data commits to
-`main`.
+With `SUPABASE_URL` and `SUPABASE_SECRET_KEY` securely supplied in your local
+environment, run the following to read existing posts without calling Apify
+or changing Supabase:
 
-## Token lifecycle
+```sh
+node tools/instagram-sync.mjs --export-only
+npm run build
+npm run preview
+```
+
+Open `/activities.html` on the preview server. The page shows a link to the
+profile when there is no local snapshot. Run the importer tests with
+`node --test tests/instagram-sync.test.mjs`. Check the workflow import and
+build steps if the live feed stops updating.
+
+## Meta token lifecycle
 
 Meta documents long-lived Instagram tokens lasting 60 days. An unexpired token
 at least 24 hours old can be refreshed. Expired or revoked tokens may require an
@@ -145,5 +163,3 @@ empty feed. Run the workflow manually for recovery after fixing access issues.
 - [Storage deletion](https://supabase.com/docs/guides/storage/management/delete-objects)
 - [Backups](https://supabase.com/docs/guides/platform/backups)
 - [GitHub scheduled workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
-
-The Activities feed starts on 18 September 2026 (Europe/London), inclusive.
