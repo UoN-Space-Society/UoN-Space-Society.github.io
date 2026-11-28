@@ -1,0 +1,144 @@
+---
+import InstagramPostCard from '../components/InstagramPostCard.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { formatInstagramDate, loadInstagramSnapshot } from '../data/instagram';
+
+const { posts, fetched_at } = await loadInstagramSnapshot();
+---
+
+<SiteLayout
+  title="Activities — Nottingham Space Society"
+  description="Recent announcements, events and activities from Nottingham Space Society on Instagram."
+>
+  <main
+    id="main"
+    tabindex="-1"
+    class="activities-page"
+  >
+    <div class="activities-heading">
+      <div>
+        <p class="mono">FROM THE SOCIETY</p>
+        <h1>Activities</h1>
+      </div>
+      <a
+        href="https://www.instagram.com/uonspacesoc/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Follow @uonspacesoc
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    </div>
+    <p class="activities-intro">
+      The latest announcements from our Instagram. Dates below show when each
+      post was published.
+    </p>
+    {posts.length ? (
+      <ul
+        class="posts-grid"
+        aria-label="Recent Instagram posts"
+      >
+        {posts.map((post) => (
+          <li>
+            <InstagramPostCard post={post} />
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="posts-empty">
+        <p>Visit our Instagram for the latest society activities.</p>
+        <a
+          href="https://www.instagram.com/uonspacesoc/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          See posts on Instagram
+          <span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </div>
+    )}
+    {fetched_at && (
+      <p class="sync-date mono">
+        Last updated{' '}
+        <time datetime={fetched_at}>{formatInstagramDate(fetched_at)}</time>
+      </p>
+    )}
+  </main>
+</SiteLayout>
+
+<style>
+  .activities-page {
+    min-height: 60vh;
+    padding: 60px 4.5%;
+  }
+  .activities-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+  }
+  .activities-heading .mono {
+    color: var(--muted);
+  }
+  .activities-page a {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .activities-intro {
+    max-width: 650px;
+    line-height: 1.7;
+    margin: 28px 0 40px;
+  }
+  .posts-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    align-items: start;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .posts-grid li {
+    min-width: 0;
+  }
+  .posts-empty {
+    padding: 32px;
+    border: 1px solid var(--line);
+    line-height: 1.7;
+  }
+  .sync-date {
+    margin-top: 32px;
+    color: var(--muted);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  @media (max-width: 1199px) {
+    .posts-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 700px) {
+    .activities-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+    .posts-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+  }
+  @media (max-width: 420px) {
+    .posts-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

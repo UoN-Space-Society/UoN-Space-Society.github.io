@@ -3,13 +3,15 @@
   margin: 0;
   padding: 0 6%;
   height: 132px;
-  display: flex;
+  /* Equal side columns keep the links centred independently of logo/icon widths. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 24px;
   z-index: 5;
 }
 .brand {
+  justify-self: start;
   display: block;
   flex-shrink: 0;
 }
@@ -33,6 +35,7 @@
   color: var(--green);
 }
 .social-links {
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -134,6 +137,10 @@
   }
 }
 @media (max-width: 1100px) {
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+  }
   .desktop-nav {
     display: none;
   }

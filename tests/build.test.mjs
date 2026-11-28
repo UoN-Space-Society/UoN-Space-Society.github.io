@@ -24,8 +24,8 @@ const pages = await Promise.all(
     .map(async (file) => ({ file, $: load(await readFile(file, 'utf8')) })),
 );
 
-test('all 20 public pages have useful metadata and unique page titles', () => {
-  assert.equal(pages.length, 20);
+test('all 21 public pages have useful metadata and unique page titles', () => {
+  assert.equal(pages.length, 21);
   const titles = new Set();
   for (const { file, $ } of pages) {
     assert.equal($('html').attr('lang'), 'en', file);
