@@ -51,15 +51,23 @@ const formatDate = (value: string) =>
             <li>
               <article class="post-card">
                 {image && (
-                  <img
-                    src={image}
-                    alt=""
-                    width="480"
-                    height="480"
-                    loading="lazy"
-                    decoding="async"
-                    referrerpolicy="no-referrer"
-                  />
+                  <a
+                    class="post-image"
+                    href={post.permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View Instagram post from ${formatDate(post.timestamp)} (opens in a new tab)`}
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      width="480"
+                      height="480"
+                      loading="lazy"
+                      decoding="async"
+                      referrerpolicy="no-referrer"
+                    />
+                  </a>
                 )}
                 <div class="post-content">
                   <time
@@ -68,15 +76,15 @@ const formatDate = (value: string) =>
                   >
                     {formatDate(post.timestamp)}
                   </time>
-                  {post.caption && <p class="post-caption">{post.caption}</p>}
                   <a
                     href={post.permalink}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`View Instagram post from ${formatDate(post.timestamp)} (opens in a new tab)`}
                   >
-                    View on Instagram <span aria-hidden="true">↗</span>
+                    View on Instagram
                   </a>
+                  {post.caption && <p class="post-caption">{post.caption}</p>}
                 </div>
               </article>
             </li>
@@ -142,6 +150,9 @@ const formatDate = (value: string) =>
     border: 1px solid var(--line);
     height: 100%;
   }
+  .post-image {
+    display: block;
+  }
   .post-card img {
     display: block;
     width: 100%;
@@ -153,6 +164,7 @@ const formatDate = (value: string) =>
     padding: 18px;
   }
   .post-content time {
+    display: block;
     color: var(--muted);
   }
   .post-caption {
@@ -163,7 +175,7 @@ const formatDate = (value: string) =>
   }
   .post-content a {
     display: inline-block;
-    margin-top: 12px;
+    margin-top: 6px;
     font-size: 13px;
   }
   .posts-empty {
