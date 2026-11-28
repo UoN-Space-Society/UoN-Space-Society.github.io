@@ -158,3 +158,84 @@ test('export-only reads Supabase without Instagram credentials or writes', async
     assert.deepEqual(JSON.parse(await readSnapshot()).posts, []);
   });
 });
+
+test('Apify imports eligible public posts without Meta credentials or paid add-ons', async () => {
+  await temporarySnapshot(async (readSnapshot) => {
+    const token = 'private-apify-test-token';
+    const post = {
+      id: '123',
+      type: 'Video',
+      caption: 'Launch',
+      url: 'https://www.instagram.com/reel/Example/',
+      displayUrl: 'https://example.com/cover.jpg',
+      timestamp: '2026-09-17T23:00:00.000Z',
+    };
+    let exported;
+    await run(
+      {
+        SUPABASE_URL: credentials.SUPABASE_URL,
+        SUPABASE_SECRET_KEY: credentials.SUPABASE_SECRET_KEY,
+        INSTAGRAM_SOURCE: 'apify',
+        APIFY_TOKEN: token,
+      },
+      async (input, options) => {
+        const url = new URL(input);
+        if (url.hostname === 'api.apify.com') {
+          assert.equal(options.headers.Authorization, 'Bearer ' + token);
+          assert.equal(url.searchParams.get('maxTotalChargeUsd'), '0.20');
+          assert.equal(url.searchParams.has('token'), false);
+          const settings = JSON.parse(options.body);
+          assert.deepEqual(settings.username, ['uonspacesoc']);
+          assert.equal(settings.resultsLimit, 50);
+          assert.equal(settings.dataDetailLevel, 'basicData');
+          return Response.json([
+            post,
+            { ...post, id: '456', timestamp: '2026-09-17T22:59:59.999Z' },
+          ]);
+        }
+        assert.equal(url.hostname, 'example.supabase.co');
+        if (options.method === 'POST') {
+          const rows = JSON.parse(options.body);
+          assert.equal(rows.length, 1);
+          const { synced_at, expires_at, ...publicFields } = rows[0];
+          assert.equal(expires_at, '2027-09-17T23:00:00.000Z');
+          assert.ok(synced_at);
+          exported = publicFields;
+          return new Response(null, { status: 201 });
+        }
+        if (options.method === 'DELETE')
+          return new Response(null, { status: 204 });
+        return Response.json([exported]);
+      },
+    );
+    const snapshot = await readSnapshot();
+    assert.equal(snapshot.includes(token), false);
+    assert.deepEqual(JSON.parse(snapshot).posts, [
+      {
+        id: post.id,
+        caption: post.caption,
+        permalink: post.url,
+        timestamp: post.timestamp,
+        media_type: 'VIDEO',
+        media_url: null,
+        thumbnail_url: post.displayUrl,
+      },
+    ]);
+  });
+});
+
+test('a failed actor launch is not retried and does not touch Supabase', async () => {
+  let calls = 0;
+  await assert.rejects(
+    run(
+      { ...credentials, INSTAGRAM_SOURCE: 'apify', APIFY_TOKEN: 'test' },
+      async (input) => {
+        calls++;
+        assert.equal(new URL(input).hostname, 'api.apify.com');
+        return new Response(null, { status: 504 });
+      },
+    ),
+    /Apify Instagram run failed/,
+  );
+  assert.equal(calls, 1);
+});

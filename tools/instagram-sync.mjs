@@ -45,6 +45,72 @@ function required(env, key) {
   if (!env[key]) throw new Error(`Missing ${key}`);
   return env[key];
 }
+async function fetchPublicPosts(env, fetcher) {
+  const token = required(env, 'APIFY_TOKEN');
+  const limit = Number(env.APIFY_RESULTS_LIMIT || '50');
+  if (!Number.isInteger(limit) || limit < 1 || limit > 100)
+    throw new Error('APIFY_RESULTS_LIMIT must be an integer between 1 and 100');
+
+  const url = new URL(
+    'https://api.apify.com/v2/acts/apify~instagram-post-scraper/run-sync-get-dataset-items',
+  );
+  url.searchParams.set('maxTotalChargeUsd', '0.20');
+  url.searchParams.set('timeout', '180');
+  url.searchParams.set('limit', String(limit));
+  url.searchParams.set(
+    'fields',
+    'id,type,caption,url,timestamp,displayUrl,error',
+  );
+
+  // A timed-out launch might already have started a billable run. Never retry it automatically.
+  let response;
+  try {
+    response = await fetcher(url, {
+      method: 'POST',
+      redirect: 'error',
+      signal: AbortSignal.timeout(200000),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: ['uonspacesoc'],
+        resultsLimit: limit,
+        onlyPostsNewerThan: new Date(Date.parse(FEED_START) - 1).toISOString(),
+        dataDetailLevel: 'basicData',
+      }),
+    });
+  } catch {
+    throw new Error(
+      'Apify request failed; check the run in the Apify dashboard',
+    );
+  }
+  if (!response.ok)
+    throw new Error(`Apify Instagram run failed (HTTP ${response.status})`);
+
+  const rows = await response.json();
+  if (
+    !Array.isArray(rows) ||
+    rows.length > limit ||
+    rows.some((row) => row?.error)
+  )
+    throw new Error('Apify did not return a valid Instagram post dataset');
+
+  const mediaTypes = {
+    Image: 'IMAGE',
+    Video: 'VIDEO',
+    Sidecar: 'CAROUSEL_ALBUM',
+  };
+  return rows.map((row) => ({
+    id: row.id,
+    caption: row.caption,
+    permalink: row.url,
+    timestamp: row.timestamp,
+    media_type: mediaTypes[row.type],
+    media_url: row.type === 'Video' ? null : row.displayUrl,
+    thumbnail_url: row.type === 'Video' ? row.displayUrl : null,
+  }));
+}
 export async function run(
   env = process.env,
   fetcher = fetch,
@@ -88,43 +154,55 @@ export async function run(
   };
   const rest = new URL('/rest/v1/instagram_posts', base);
   if (!exportOnly) {
-    const token = required(env, 'INSTAGRAM_ACCESS_TOKEN');
-    const id = required(env, 'INSTAGRAM_USER_ID');
-    const version = required(env, 'INSTAGRAM_API_VERSION');
-    if (!/^v\d+\.\d+$/.test(version) || !/^\d+$/.test(id))
-      throw new Error('Invalid Instagram API version or account ID');
-    const graph = `https://graph.instagram.com/${version}`;
-    const igHeaders = { Authorization: `Bearer ${token}` };
-    const account = await request(`${graph}/${id}?fields=id,username`, {
-      headers: igHeaders,
-    });
-    if (account.username?.toLowerCase() !== 'uonspacesoc')
-      throw new Error('Authorised Instagram account must be uonspacesoc');
-    let cursor;
     const collected = new Map();
-    for (let page = 0; page < 20; page++) {
-      const url = new URL(`${graph}/${id}/media`);
-      url.searchParams.set('fields', FIELDS);
-      url.searchParams.set('limit', '100');
-      if (cursor) url.searchParams.set('after', cursor);
-      const result = await request(url, { headers: igHeaders });
-      if (!Array.isArray(result.data))
-        throw new Error('Invalid Instagram media response');
-      let older = false;
-      for (const post of result.data) {
+    const source = env.INSTAGRAM_SOURCE || 'meta';
+    if (source === 'apify') {
+      const posts = await fetchPublicPosts(env, fetcher);
+      for (const post of posts) {
         const row = record(post, now);
-        if (row.timestamp < FEED_START || new Date(row.expires_at) <= now) {
-          older = true;
-          continue;
-        }
-        collected.set(row.id, row);
+        if (row.timestamp >= FEED_START && new Date(row.expires_at) > now)
+          collected.set(row.id, row);
       }
-      cursor = result.paging?.cursors?.after;
-      if (!result.paging?.next || !cursor || older) break;
-      if (page === 19)
-        throw new Error(
-          'Instagram pagination exceeded bounded import; narrow the import or inspect account',
-        );
+    } else if (source === 'meta') {
+      const token = required(env, 'INSTAGRAM_ACCESS_TOKEN');
+      const id = required(env, 'INSTAGRAM_USER_ID');
+      const version = required(env, 'INSTAGRAM_API_VERSION');
+      if (!/^v\d+\.\d+$/.test(version) || !/^\d+$/.test(id))
+        throw new Error('Invalid Instagram API version or account ID');
+      const graph = `https://graph.instagram.com/${version}`;
+      const igHeaders = { Authorization: `Bearer ${token}` };
+      const account = await request(`${graph}/${id}?fields=id,username`, {
+        headers: igHeaders,
+      });
+      if (account.username?.toLowerCase() !== 'uonspacesoc')
+        throw new Error('Authorised Instagram account must be uonspacesoc');
+      let cursor;
+      for (let page = 0; page < 20; page++) {
+        const url = new URL(`${graph}/${id}/media`);
+        url.searchParams.set('fields', FIELDS);
+        url.searchParams.set('limit', '100');
+        if (cursor) url.searchParams.set('after', cursor);
+        const result = await request(url, { headers: igHeaders });
+        if (!Array.isArray(result.data))
+          throw new Error('Invalid Instagram media response');
+        let older = false;
+        for (const post of result.data) {
+          const row = record(post, now);
+          if (row.timestamp < FEED_START || new Date(row.expires_at) <= now) {
+            older = true;
+            continue;
+          }
+          collected.set(row.id, row);
+        }
+        cursor = result.paging?.cursors?.after;
+        if (!result.paging?.next || !cursor || older) break;
+        if (page === 19)
+          throw new Error(
+            'Instagram pagination exceeded bounded import; narrow the import or inspect account',
+          );
+      }
+    } else {
+      throw new Error('INSTAGRAM_SOURCE must be meta or apify');
     }
     if (collected.size) {
       const url = new URL(rest);
