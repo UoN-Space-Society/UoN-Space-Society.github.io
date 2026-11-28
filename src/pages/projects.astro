@@ -36,9 +36,7 @@ if (currentProjects.some(({ data }) => !data.division)) {
       aria-label="Project divisions"
     >
       {projectDivisions.map((division) => (
-        <a href={`#${division.id}`}>
-          {division.title} <span aria-hidden="true">↓</span>
-        </a>
+        <a href={`#${division.id}`}>{division.title}</a>
       ))}
     </nav>
     {projectDivisions.map((division) => (
